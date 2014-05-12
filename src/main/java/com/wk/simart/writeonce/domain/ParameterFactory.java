@@ -22,4 +22,5 @@ public class ParameterFactory extends AbstractDescriptorFactory {
     public <T> T create(Class<T> cls, Object data) {
         return ParameterDescriptor[].class.isAssignableFrom(cls) ? (T) create((Parameter[]) data) : null;
     }
+
 }

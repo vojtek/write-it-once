@@ -1,5 +1,5 @@
 package com.wk.simart.writeonce.common;
 
-public interface AnnotationDescriptor {
+public interface AnnotationDescriptor extends TypeDescriptor, HasAnnotations, HasMethods {
 
 }

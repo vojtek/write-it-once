@@ -21,14 +21,14 @@ public class GeneratorServiceTest {
 
         final String template = FileUtils.read("src/test/resources/scripts/Builder.java");
 
-        Reflections reflections = new Reflections("com.wk.simart.writeonce.domain");
+        final Reflections reflections = new Reflections("com.wk.simart.writeonce.domain");
         final Set<Class<?>> datas = reflections.getTypesAnnotatedWith(Builder.class);
 
         for (Class<?> data : datas) {
             final String sourceCode = generator.generate(data, template);
             final String fileName = generator.generate(data, "${cls.shortName}Builder.java");
-            final String filePatch = generatedFilePatch + FileUtils.package2Path(data) + File.separator + fileName;
-            FileUtils.write(filePatch, sourceCode);
+            final String filePath = generatedFilePatch + FileUtils.package2Path(data) + File.separator + fileName;
+            FileUtils.write(filePath, sourceCode);
         }
 
     }
