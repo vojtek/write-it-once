@@ -1,8 +1,7 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>org.simart.wk</groupId>
+	<groupId>org.simart</groupId>
 	<artifactId>write-it-once</artifactId>
 	<packaging>jar</packaging>
 	<version>0.1</version>
@@ -20,21 +19,28 @@
 		<developer>
 			<name>Wojciech Kołodziej</name>
 			<organization>Simart Wojciech Kołodziej</organization>
-			<email>vojtekkol@gmail.com</email>
+			<email>vojtek.pl@wp.pl</email>
 		</developer>
 	</developers>
-	
+
 	<issueManagement>
 		<system>code.google.com</system>
 		<url>http://code.google.com/p/write-it-once/issues</url>
 	</issueManagement>
-	
+
+	<parent>
+		<groupId>org.sonatype.oss</groupId>
+		<artifactId>oss-parent</artifactId>
+		<version>7</version>
+	</parent>
+
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
-	
+
 	<scm>
 		<connection>scm:git:https://code.google.com/p/write-it-once/</connection>
+		<developerConnection>scm:git:https://code.google.com/p/write-it-once/</developerConnection>
 		<url>http://code.google.com/p/write-it-once/source/browse/</url>
 	</scm>
 
@@ -101,14 +107,31 @@
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>2.12</version>
 				<configuration>
-					<!--  fix java.class.path  -->
+					<!-- fix java.class.path -->
 					<useSystemClassLoader>false</useSystemClassLoader>
 					<additionalClasspathElements>
 						<additionalClasspathElement>${project.build.outputDirectory}/target/test-classes</additionalClasspathElement>
 					</additionalClasspathElements>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-gpg-plugin</artifactId>
+				<version>1.5</version>
+				<configuration>
+					<useAgent>--no-use-agent</useAgent>
+				</configuration>
+				<executions>
+					<execution>
+						<id>sign-artifacts</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>sign</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
-	
+
 </project>
