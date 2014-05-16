@@ -4,7 +4,7 @@
 	<groupId>org.simart</groupId>
 	<artifactId>write-it-once</artifactId>
 	<packaging>jar</packaging>
-	<version>0.1</version>
+	<version>0.1-SNAPSHOT</version>
 	<name>write-it-once</name>
 	<description>Code / script generator based on Java classes and template engine</description>
 	<url>https://code.google.com/p/write-it-once/</url>
@@ -98,36 +98,18 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>2.3.2</version>
 				<configuration>
-					<encoding>UTF-8</encoding>
-					<source>1.5</source>
-					<target>1.5</target>
+					<source>1.6</source>
+					<target>1.6</target>
 				</configuration>
 			</plugin>
 			<plugin>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<version>2.12</version>
-				<configuration>
-					<!-- fix java.class.path -->
-					<useSystemClassLoader>false</useSystemClassLoader>
-					<additionalClasspathElements>
-						<additionalClasspathElement>${project.build.outputDirectory}/target/test-classes</additionalClasspathElement>
-					</additionalClasspathElements>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-gpg-plugin</artifactId>
-				<version>1.5</version>
-				<configuration>
-					<useAgent>--no-use-agent</useAgent>
-				</configuration>
+				<version>1.4</version>
 				<executions>
 					<execution>
 						<id>sign-artifacts</id>
 						<phase>verify</phase>
-						<goals>
-							<goal>sign</goal>
-						</goals>
+						<goals><goal>sign</goal></goals>
 					</execution>
 				</executions>
 			</plugin>
