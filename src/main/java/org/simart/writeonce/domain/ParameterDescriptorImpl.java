@@ -6,12 +6,12 @@ import org.simart.writeonce.common.ParameterDescriptor;
 
 public class ParameterDescriptorImpl extends ClassDescriptorImpl implements ParameterDescriptor {
 
-    private final Parameter parameter;
+    // private final Parameter parameter;
     private final int position;
 
     public ParameterDescriptorImpl(Context context, Parameter parameter, final int position) {
         super(context, parameter.getType());
-        this.parameter = parameter;
+        // this.parameter = parameter;
         this.position = position;
     }
 

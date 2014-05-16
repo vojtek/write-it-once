@@ -29,7 +29,7 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 
-public class ClassDescriptorImpl extends TypeDescriptorImpl implements ClassDescriptor, BeanClassDescriptor, EntityDescriptor {
+public class ClassDescriptorImpl extends TypeDescriptorImpl implements ClassDescriptor, BeanClassDescriptor, EntityDescriptor, EnumDescriptor {
 
     private final Function<Method, BeanMethodDescriptor> method2descriptor;
     private final Function<Field, FieldDescriptor> field2descriptor;
@@ -203,6 +203,14 @@ public class ClassDescriptorImpl extends TypeDescriptorImpl implements ClassDesc
 
     public Boolean isEntity() {
         return getAnnotation().get(Entity.class.getName()) != null;
+    }
+
+    public Boolean isEnum() {
+        return cls.getEnumConstants() != null;
+    }
+
+    public Object[] getEnums() {
+        return cls.getEnumConstants();
     }
 
 }

@@ -15,26 +15,47 @@ import javax.persistence.Table;
  */
 public interface TableDescriptor {
 
-    /** Database schema name **/
+    /**
+     * Database schema name
+     * 
+     * @return
+     */
     String getSchema();
 
-    /** Database table name */
+    /**
+     * Database table name
+     * 
+     * @return
+     */
     String getName();
 
     /**
      * Table's primaty keys
      * 
      * @see TableDescriptor#getSinglePrimaryKey()
+     * @return
      **/
     ColumnDescriptor[] getPrimaryKeys();
 
-    /** Table's primaty key - use this if one */
+    /**
+     * Table's primaty key - use this if one
+     * 
+     * @return
+     */
     ColumnDescriptor getSinglePrimaryKey();
 
-    /** Table's column by name */
+    /**
+     * Table's column by name
+     * 
+     * @return
+     */
     Map<String, ColumnDescriptor> getColumn();
 
-    /** All table's columns in array */
+    /**
+     * All table's columns in array
+     * 
+     * @return
+     */
     ColumnDescriptor[] getColumns();
 
 }
