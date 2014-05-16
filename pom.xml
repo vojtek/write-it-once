@@ -4,7 +4,7 @@
 	<groupId>org.simart</groupId>
 	<artifactId>write-it-once</artifactId>
 	<packaging>jar</packaging>
-	<version>0.1-SNAPSHOT</version>
+	<version>0.2-SNAPSHOT</version>
 	<name>write-it-once</name>
 	<description>Code / script generator based on Java classes and template engine</description>
 	<url>https://code.google.com/p/write-it-once/</url>
