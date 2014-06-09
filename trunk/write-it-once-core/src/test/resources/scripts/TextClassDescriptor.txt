@@ -1,0 +1,28 @@
+${cls.package.name};
+Class: ${cls.shortName}<% if(cls.isEntity()) { %>
+Table: ${cls.table.name}<% } %>
+=======================
+|- 	Annotations<% for(annotation in cls.annotations) { %>
+ |- ${annotation.name}<% for(attributeEntry in annotation.attribute) { %>
+  |- ${attributeEntry.key} = ${attributeEntry.value}<% } %><% } %>
+|- Fields<% for(field in cls.fields) { %>
+ |- ${field.type} ${field.name}<% if(cls.isEntity()) { %>
+  |- Column = ${field.column?.name} ${field.column?.type}<% } %>
+  |- Getter = ${field.getter?.name}
+  |- Setter = ${field.setter?.name}
+  |- Annotations:<% for(annotation in field.annotations) { %>
+   |- ${annotation.name}<% for(attributeEntry in annotation.attribute) { %>
+    |- ${attributeEntry.key} = ${attributeEntry.value}<% } %><% } %><% } %>
+|- Methods<% for(method in cls.methods) { %>
+ |- ${method.type.name} ${method.name}
+  |- Bean field = ${method.field?.name}
+  |- Parameters<% for(parameter in method.parameters) { %>
+  |- [${parameter.position}] ${parameter.name}<% } %><% } %><% if(cls.isEntity()) { %>
+|- Table
+ |- Schema = ${cls.table.schema}
+ |- Name = ${cls.table.name}
+ |- Primary key = ${cls.table.singlePrimaryKey.name}
+ |- Columns<% for(column in cls.table.columns) { %>
+  |- Name = ${column.name}
+   |- Type = ${column.fullType}
+   |- Nullable = ${column.nullable}<% } %><% } %>
