@@ -1,0 +1,87 @@
+org.simart.writeonce.domain;
+Class: Atest
+Table: A_TEST
+=======================
+|- 	Annotations
+ |- org.simart.writeonce.domain.Describe
+ |- org.simart.writeonce.domain.Builder
+  |- alias = ALIAS
+ |- javax.persistence.Table
+  |- schema = TEST
+  |- uniqueConstraints = []
+  |- catalog = 
+  |- name = A_TEST
+ |- javax.persistence.Entity
+  |- name = 
+|- Fields
+ |- java.lang.String atestField
+  |- Column = AT_EST VARCHAR
+  |- Getter = getAtestField
+  |- Setter = setAtestField
+  |- Annotations:
+   |- javax.persistence.Column
+    |- nullable = false
+    |- precision = 0
+    |- unique = false
+    |- name = AT_EST
+    |- length = 30
+    |- scale = 0
+    |- updatable = true
+    |- columnDefinition = 
+    |- table = 
+    |- insertable = true
+ |- org.simart.writeonce.domain.Btest btest
+  |- Column = BTEST null
+  |- Getter = getBtest
+  |- Setter = setBtest
+  |- Annotations:
+   |- javax.persistence.ManyToOne
+    |- targetEntity = void
+    |- cascade = []
+    |- fetch = EAGER
+    |- optional = true
+ |- java.lang.Long id
+  |- Column = ID NUMBER
+  |- Getter = getId
+  |- Setter = setId
+  |- Annotations:
+   |- javax.persistence.Id
+   |- javax.persistence.GeneratedValue
+    |- generator = 
+    |- strategy = AUTO
+|- Methods
+ |- java.lang.String getAtestField
+  |- Bean field = atestField
+  |- Parameters
+ |- void setAtestField
+  |- Bean field = atestField
+  |- Parameters
+  |- [1] arg0
+ |- void setBtest
+  |- Bean field = btest
+  |- Parameters
+  |- [1] arg0
+ |- org.simart.writeonce.domain.Btest getBtest
+  |- Bean field = btest
+  |- Parameters
+ |- void setId
+  |- Bean field = id
+  |- Parameters
+  |- [1] arg0
+ |- java.lang.Long getId
+  |- Bean field = id
+  |- Parameters
+|- Table
+ |- Schema = TEST
+ |- Name = A_TEST
+ |- Primary key = ID
+ |- Columns
+  |- Name = AT_EST
+   |- Type = VARCHAR(CHAR 30)
+   |- Nullable = false
+  |- Name = BTEST
+   |- Type = null
+   |- Nullable = false
+  |- Name = ID
+   |- Type = NUMBER(0, 0)
+   |- Nullable = false

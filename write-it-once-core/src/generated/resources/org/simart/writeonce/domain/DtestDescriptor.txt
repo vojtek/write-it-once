@@ -1,0 +1,20 @@
+org.simart.writeonce.domain;
+Class: Dtest
+=======================
+|- 	Annotations
+ |- org.simart.writeonce.domain.Describe
+ |- org.simart.writeonce.domain.Builder
+  |- alias = ALIAS
+|- Fields
+ |- java.lang.String dtestfield
+  |- Getter = getDtestfield
+  |- Setter = setDtestfield
+  |- Annotations:
+|- Methods
+ |- void setDtestfield
+  |- Bean field = dtestfield
+  |- Parameters
+  |- [1] arg0
+ |- java.lang.String getDtestfield
+  |- Bean field = dtestfield
+  |- Parameters
