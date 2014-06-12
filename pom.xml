@@ -1,0 +1,54 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>org.simart</groupId>
+	<artifactId>write-it-once</artifactId>
+	<packaging>pom</packaging>
+	<version>0.2-SNAPSHOT</version>
+	<name>write-it-once</name>
+	
+	<modules>
+        <module>write-it-once-core</module>
+        <module>write-it-once-plugin</module>
+		<module>write-it-once-cmd-tool</module>
+    </modules>
+	
+	<description>Code / script generator based on Java classes and template engine</description>
+	<url>https://code.google.com/p/write-it-once/</url>
+	<licenses>
+		<license>
+			<name>The Apache Software License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+	<developers>
+		<developer>
+			<name>Wojciech Kołodziej</name>
+			<organization>Simart Wojciech Kołodziej</organization>
+			<email>vojtek.pl@wp.pl</email>
+		</developer>
+	</developers>
+
+	<issueManagement>
+		<system>code.google.com</system>
+		<url>http://code.google.com/p/write-it-once/issues</url>
+	</issueManagement>
+
+	<parent>
+		<groupId>org.sonatype.oss</groupId>
+		<artifactId>oss-parent</artifactId>
+		<version>7</version>
+	</parent>
+ 
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+	<scm>
+		<connection>scm:git:https://code.google.com/p/write-it-once/</connection>
+		<developerConnection>scm:git:https://code.google.com/p/write-it-once/</developerConnection>
+		<url>http://code.google.com/p/write-it-once/source/browse</url>
+	</scm>
+
+</project>

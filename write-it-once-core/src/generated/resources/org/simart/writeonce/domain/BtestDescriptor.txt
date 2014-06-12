@@ -1,0 +1,37 @@
+org.simart.writeonce.domain;
+Class: Btest
+=======================
+|- 	Annotations
+ |- org.simart.writeonce.domain.Describe
+|- Fields
+ |- java.lang.Long id
+  |- Getter = null
+  |- Setter = null
+  |- Annotations:
+   |- javax.persistence.Id
+   |- javax.persistence.GeneratedValue
+    |- generator = 
+    |- strategy = AUTO
+ |- java.lang.String btestfield
+  |- Getter = getBtestfield
+  |- Setter = setBtestfield
+  |- Annotations:
+   |- javax.persistence.Column
+    |- nullable = false
+    |- precision = 0
+    |- unique = false
+    |- name = BTEST_FIELD
+    |- length = 10
+    |- scale = 0
+    |- updatable = true
+    |- columnDefinition = 
+    |- table = 
+    |- insertable = true
+|- Methods
+ |- java.lang.String getBtestfield
+  |- Bean field = btestfield
+  |- Parameters
+ |- void setBtestfield
+  |- Bean field = btestfield
+  |- Parameters
+  |- [1] arg0
