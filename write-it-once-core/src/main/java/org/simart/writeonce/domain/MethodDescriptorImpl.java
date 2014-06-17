@@ -21,7 +21,6 @@ import org.simart.writeonce.common.TypeDescriptor;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Collections2;
-import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Maps;
 
@@ -32,97 +31,97 @@ public class MethodDescriptorImpl implements BeanMethodDescriptor, EntityColumnD
     private final Function<Annotation, AnnotationDescriptor> annotation2descriptor;
 
     public MethodDescriptorImpl(final Context context, Method method) {
-        super();
-        this.context = context;
-        this.method = method;
-        this.annotation2descriptor = new Function<Annotation, AnnotationDescriptor>() {
-            @Override
-            public AnnotationDescriptor apply(Annotation input) {
-                return context.create(AnnotationDescriptor.class, input);
-            }
-        };
+	super();
+	this.context = context;
+	this.method = method;
+	this.annotation2descriptor = new Function<Annotation, AnnotationDescriptor>() {
+	    @Override
+	    public AnnotationDescriptor apply(Annotation input) {
+		return context.create(AnnotationDescriptor.class, input);
+	    }
+	};
     }
 
     @Override
     public AnnotationDescriptor[] getAnnotations() {
-        final Set<Annotation> annotations = ImmutableSet.copyOf(this.method.getAnnotations());
-        final Collection<AnnotationDescriptor> annotationDescriptors = Collections2.transform(annotations, annotation2descriptor);
-        return annotationDescriptors.toArray(new AnnotationDescriptor[annotationDescriptors.size()]);
+	final Set<Annotation> annotations = ImmutableSet.copyOf(this.method.getAnnotations());
+	final Collection<AnnotationDescriptor> annotationDescriptors = Collections2.transform(annotations, annotation2descriptor);
+	return annotationDescriptors.toArray(new AnnotationDescriptor[annotationDescriptors.size()]);
     }
 
     @Override
     public Map<String, AnnotationDescriptor> getAnnotation() {
-        final AnnotationDescriptor[] annotations = getAnnotations();
-        final Map<String, AnnotationDescriptor> result = Maps.newHashMap();
-        for (AnnotationDescriptor annotation : annotations) {
-            result.put(annotation.getName(), annotation);
-        }
-        return ImmutableMap.copyOf(result);
+	final AnnotationDescriptor[] annotations = getAnnotations();
+	final Map<String, AnnotationDescriptor> result = Maps.newHashMap();
+	for (AnnotationDescriptor annotation : annotations) {
+	    result.put(annotation.getName(), annotation);
+	}
+	return result;
     }
 
     @Override
     public String getName() {
-        return this.method.getName();
+	return this.method.getName();
     }
 
     @Override
     public TypeDescriptor getType() {
-        return context.create(TypeDescriptor.class, method.getReturnType());
+	return context.create(TypeDescriptor.class, method.getReturnType());
     }
 
     @Override
     public ParameterDescriptor[] getParameters() {
-        final Parameter[] parameters = method.getParameters();
-        return context.create(ParameterDescriptor[].class, parameters);
+	final Parameter[] parameters = method.getParameters();
+	return context.create(ParameterDescriptor[].class, parameters);
     }
 
     @Override
     public BeanMethodDescriptor getGetter() {
-        if (isGetter()) {
-            return this;
-        }
-        return context.create(BeanClassDescriptor.class, method.getDeclaringClass()).getGetter().get(getField().getName());
+	if (isGetter()) {
+	    return this;
+	}
+	return context.create(BeanClassDescriptor.class, method.getDeclaringClass()).getGetter().get(getField().getName());
     }
 
     @Override
     public BeanMethodDescriptor getSetter() {
-        if (isSetter()) {
-            return this;
-        }
-        return context.create(BeanClassDescriptor.class, method.getDeclaringClass()).getSetter().get(getField().getName());
+	if (isSetter()) {
+	    return this;
+	}
+	return context.create(BeanClassDescriptor.class, method.getDeclaringClass()).getSetter().get(getField().getName());
     }
 
     @Override
     public FieldDescriptor getField() {
-        if (!isBean()) {
-            return null;
-        }
-        return context.create(BeanClassDescriptor.class, method.getDeclaringClass()).getField().get(uncapitalize(getName().substring(3)));
+	if (!isBean()) {
+	    return null;
+	}
+	return context.create(BeanClassDescriptor.class, method.getDeclaringClass()).getField().get(uncapitalize(getName().substring(3)));
     }
 
     @Override
     public boolean isGetter() {
-        return getName().startsWith("get");
+	return getName().startsWith("get");
     }
 
     @Override
     public boolean isSetter() {
-        return getName().startsWith("set");
+	return getName().startsWith("set");
     }
 
     @Override
     public boolean isBean() {
-        return isGetter() || isSetter();
+	return isGetter() || isSetter();
     }
 
     @Override
     public boolean isEntity() {
-        return context.create(EntityTableDescriptor.class, this.method.getDeclaringClass()) != null;
+	return context.create(EntityTableDescriptor.class, this.method.getDeclaringClass()) != null;
     }
 
     @Override
     public ColumnDescriptor getColumn() {
-        return context.create(ColumnDescriptor.class, this.method);
+	return context.create(ColumnDescriptor.class, this.method);
     }
 
 }
