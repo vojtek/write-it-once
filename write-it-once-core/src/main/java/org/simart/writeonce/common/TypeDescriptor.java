@@ -1,6 +1,6 @@
 package org.simart.writeonce.common;
 
-public interface TypeDescriptor {
+public interface TypeDescriptor extends ElementaryDescriptor {
 
     String getName();
 

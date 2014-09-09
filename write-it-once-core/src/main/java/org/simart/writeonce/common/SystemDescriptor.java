@@ -1,5 +1,5 @@
 package org.simart.writeonce.common;
 
-public interface SystemDescriptor {
+public interface SystemDescriptor extends ElementaryDescriptor {
 
 }

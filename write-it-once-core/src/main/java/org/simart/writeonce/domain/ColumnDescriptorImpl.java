@@ -9,6 +9,7 @@ import org.simart.writeonce.common.BeanMethodDescriptor;
 import org.simart.writeonce.common.ColumnDescriptor;
 import org.simart.writeonce.common.ColumnNameResolver;
 import org.simart.writeonce.common.ColumnTypeResolver;
+import org.simart.writeonce.common.Help;
 
 public class ColumnDescriptorImpl implements ColumnDescriptor {
 
@@ -18,81 +19,99 @@ public class ColumnDescriptorImpl implements ColumnDescriptor {
     private final Column column;
 
     public ColumnDescriptorImpl(Context context, Field field) {
-	super();
-	this.context = context;
-	this.field = field;
-	this.method = null;
-	this.column = this.field.getAnnotation(Column.class);
+        super();
+        this.context = context;
+        this.field = field;
+        this.method = null;
+        this.column = this.field.getAnnotation(Column.class);
     }
 
     public ColumnDescriptorImpl(Context context, Method method) {
-	super();
-	this.context = context;
-	this.field = null;
-	this.method = method;
-	this.column = this.method.getAnnotation(Column.class);
+        super();
+        this.context = context;
+        this.field = null;
+        this.method = method;
+        this.column = this.method.getAnnotation(Column.class);
     }
 
     @Override
     public String getName() {
-	if (this.column != null && !this.column.name().isEmpty()) {
-	    return this.column.name();
-	}
-	final ColumnNameResolver columnNameResolver = context.getColumnNameResolver();
-	if (columnNameResolver == null) {
-	    throw new RuntimeException("undefined column name resolver");
-	}
-	if (this.field != null) {
-	    return columnNameResolver.getName(field.getName());
-	} else {
-	    return columnNameResolver.getName(context.create(BeanMethodDescriptor.class, this.method).getField().getName());
-	}
+        if (this.column != null && !this.column.name().isEmpty()) {
+            return this.column.name();
+        }
+        final ColumnNameResolver columnNameResolver = context.getColumnNameResolver();
+        if (columnNameResolver == null) {
+            throw new RuntimeException("undefined column name resolver");
+        }
+        if (this.field != null) {
+            return columnNameResolver.getName(field.getName());
+        } else {
+            return columnNameResolver.getName(context.create(BeanMethodDescriptor.class, this.method).getField().getName());
+        }
     }
 
     @Override
     public String getType() {
-	final ColumnTypeResolver columnTypeResolver = context.getColumnTypeResolver();
-	if (columnTypeResolver == null) {
-	    throw new RuntimeException("undefined column type resolver");
-	}
-	if (this.field != null) {
-	    return columnTypeResolver.getType(column, this.field.getType(), field, method);
-	} else {
-	    return columnTypeResolver.getType(column, this.method.getReturnType(), field, method);
-	}
+        final ColumnTypeResolver columnTypeResolver = context.getColumnTypeResolver();
+        if (columnTypeResolver == null) {
+            throw new RuntimeException("undefined column type resolver");
+        }
+        if (this.field != null) {
+            return columnTypeResolver.getType(column, this.field.getType(), field, method);
+        } else {
+            return columnTypeResolver.getType(column, this.method.getReturnType(), field, method);
+        }
     }
 
     @Override
     public String getFullType() {
-	final ColumnTypeResolver columnTypeResolver = context.getColumnTypeResolver();
-	if (columnTypeResolver == null) {
-	    throw new RuntimeException("undefined column type resolver");
-	}
-	if (this.field != null) {
-	    return columnTypeResolver.getFullType(column, this.field.getType(), field, method);
-	} else {
-	    return columnTypeResolver.getFullType(column, this.method.getReturnType(), field, method);
-	}
+        final ColumnTypeResolver columnTypeResolver = context.getColumnTypeResolver();
+        if (columnTypeResolver == null) {
+            throw new RuntimeException("undefined column type resolver");
+        }
+        if (this.field != null) {
+            return columnTypeResolver.getFullType(column, this.field.getType(), field, method);
+        } else {
+            return columnTypeResolver.getFullType(column, this.method.getReturnType(), field, method);
+        }
     }
 
     @Override
     public Integer getLength() {
-	return this.column == null ? 0 : this.column.length();
+        return this.column == null ? 0 : this.column.length();
     }
 
     @Override
     public Integer getPrecision() {
-	return this.column == null ? 0 : this.column.precision();
+        return this.column == null ? 0 : this.column.precision();
     }
 
     @Override
     public Integer getScale() {
-	return this.column == null ? 0 : this.column.scale();
+        return this.column == null ? 0 : this.column.scale();
     }
 
     @Override
     public Boolean isNullable() {
-	return this.column == null ? false : this.column.nullable();
+        return this.column == null ? false : this.column.nullable();
     }
 
+    @Override
+    public Help get_help() {
+        return new HelpFactory().create(this);
+    }
+
+    @Override
+    public Object get_root() {
+        if (field != null) {
+            return field;
+        } else {
+            return method;
+        }
+    }
+
+    @Override
+    public String toString() {
+        return get_help().toString();
+    }
 }

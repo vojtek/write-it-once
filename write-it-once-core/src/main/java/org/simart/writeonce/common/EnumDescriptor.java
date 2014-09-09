@@ -6,7 +6,7 @@ package org.simart.writeonce.common;
  * @author Wojciech Kołodziej
  * 
  */
-public interface EnumDescriptor {
+public interface EnumDescriptor extends ElementaryDescriptor {
 
     /**
      * <code>true</code> if class is enum

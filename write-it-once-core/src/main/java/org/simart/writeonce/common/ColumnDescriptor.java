@@ -1,6 +1,6 @@
 package org.simart.writeonce.common;
 
-public interface ColumnDescriptor {
+public interface ColumnDescriptor extends ElementaryDescriptor {
 
     String getName();
 

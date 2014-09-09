@@ -7,6 +7,7 @@ import org.simart.writeonce.common.ColumnTypeResolver;
 import org.simart.writeonce.common.DescriptorFactory;
 import org.simart.writeonce.common.Generator;
 
+import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 
 public class GeneratorBuilder {
@@ -33,6 +34,7 @@ public class GeneratorBuilder {
     private ColumnNameResolver columnNameResolver;
     private ColumnTypeResolver columnTypeResolver;
     private TableNameResolver tableNameResolver;
+    private String mainAlias = "cls";
 
     public GeneratorBuilder override(DescriptorFactory descriptorFactory) {
         descriptorFactories.offerFirst(descriptorFactory);
@@ -59,13 +61,19 @@ public class GeneratorBuilder {
         return this;
     }
 
+    public GeneratorBuilder mainAlias(String mainAlias) {
+        Preconditions.checkNotNull(mainAlias);
+        this.mainAlias = mainAlias;
+        return this;
+    }
+
     public Generator build() {
         final Context context = new Context();
         context.setDescriptorFactories(ImmutableList.copyOf(descriptorFactories));
         context.setColumnNameResolver(columnNameResolver);
         context.setColumnTypeResolver(columnTypeResolver);
         context.setTableNameResolver(tableNameResolver);
-        final Generator generator = new GeneratorImpl(context);
+        final Generator generator = new GeneratorImpl(context, mainAlias);
         return generator;
     }
 }

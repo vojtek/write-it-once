@@ -1,5 +1,6 @@
 package org.simart.writeonce.domain;
 
+import org.simart.writeonce.common.Help;
 import org.simart.writeonce.common.PackageDescriptor;
 
 public class PackageDescriptorImpl implements PackageDescriptor {
@@ -18,4 +19,18 @@ public class PackageDescriptorImpl implements PackageDescriptor {
         return pcg.getName();
     }
 
+    @Override
+    public Help get_help() {
+        return new HelpFactory().create(this);
+    }
+
+    @Override
+    public Object get_root() {
+        return pcg;
+    }
+
+    @Override
+    public String toString() {
+        return get_help().toString();
+    }
 }

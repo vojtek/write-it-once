@@ -13,7 +13,7 @@ import javax.persistence.Table;
  * @author Wojciech Kołodziej
  * 
  */
-public interface TableDescriptor {
+public interface TableDescriptor extends ElementaryDescriptor {
 
     /**
      * Database schema name

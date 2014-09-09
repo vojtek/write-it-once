@@ -1,5 +1,6 @@
 package org.simart.writeonce.domain;
 
+import org.simart.writeonce.common.Help;
 import org.simart.writeonce.common.PackageDescriptor;
 import org.simart.writeonce.common.TypeDescriptor;
 
@@ -22,13 +23,22 @@ public class TypeDescriptorImpl implements TypeDescriptor {
         return cls.getSimpleName();
     }
 
-    @Override
-    public String toString() {
-        return getName();
-    }
-
     public PackageDescriptor getPackage() {
         return context.create(PackageDescriptor.class, cls.getPackage());
     }
 
+    @Override
+    public Help get_help() {
+        return new HelpFactory().create(this);
+    }
+
+    @Override
+    public Object get_root() {
+        return cls;
+    }
+
+    @Override
+    public String toString() {
+        return get_help().toString();
+    }
 }

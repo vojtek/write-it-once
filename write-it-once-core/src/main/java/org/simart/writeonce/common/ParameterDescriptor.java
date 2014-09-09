@@ -1,6 +1,6 @@
 package org.simart.writeonce.common;
 
-public interface ParameterDescriptor {
+public interface ParameterDescriptor extends ElementaryDescriptor {
 
     int getPosition();
 

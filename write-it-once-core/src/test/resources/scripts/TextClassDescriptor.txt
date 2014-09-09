@@ -1,12 +1,17 @@
-${cls.package.name};
-Class: ${cls.shortName}<% if(cls.isEntity()) { %>
-Table: ${cls.table.name}<% } %>
+${cls.package.name}
+${cls.package}
+Class: ${cls.shortName}
+${cls}<% if(cls.isEntity()) { %>
+Table: ${cls.table.name}
+${cls.table}<% } %>
 =======================
 |- 	Annotations<% for(annotation in cls.annotations) { %>
- |- ${annotation.name}<% for(attributeEntry in annotation.attribute) { %>
+ |- ${annotation.name}
+ |- ${annotation}<% for(attributeEntry in annotation.attribute) { %>
   |- ${attributeEntry.key} = ${attributeEntry.value}<% } %><% } %>
 |- Fields<% for(field in cls.fields) { %>
- |- ${field.type} ${field.name}<% if(cls.isEntity()) { %>
+ |- ${field.type} ${field.name}
+ |- ${field}<% if(cls.isEntity()) { %>
   |- Column = ${field.column?.name} ${field.column?.type}<% } %>
   |- Getter = ${field.getter?.name}
   |- Setter = ${field.setter?.name}
