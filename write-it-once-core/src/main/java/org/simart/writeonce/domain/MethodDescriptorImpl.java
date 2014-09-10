@@ -4,7 +4,6 @@ import static org.simart.writeonce.utils.StringUtils.uncapitalize;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
-import java.lang.reflect.Parameter;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
@@ -72,7 +71,7 @@ public class MethodDescriptorImpl implements BeanMethodDescriptor, EntityColumnD
 
     @Override
     public ParameterDescriptor[] getParameters() {
-        final Parameter[] parameters = method.getParameters();
+        final Class<?>[] parameters = method.getParameterTypes();
         return context.create(ParameterDescriptor[].class, parameters);
     }
 
