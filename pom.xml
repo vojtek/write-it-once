@@ -4,15 +4,15 @@
 	<groupId>org.simart</groupId>
 	<artifactId>write-it-once</artifactId>
 	<packaging>pom</packaging>
-	<version>0.4.2-SNAPSHOT</version>
+	<version>0.5.0</version>
 	<name>write-it-once</name>
-	
+
 	<modules>
-        <module>write-it-once-core</module>
-        <module>write-it-once-plugin</module>
+		<module>write-it-once-core</module>
+		<module>write-it-once-plugin</module>
 		<module>write-it-once-cmd-tool</module>
-    </modules>
-	
+	</modules>
+
 	<description>Code / script generator based on Java classes and template engine</description>
 	<url>https://code.google.com/p/write-it-once/</url>
 	<licenses>
@@ -40,7 +40,7 @@
 		<artifactId>oss-parent</artifactId>
 		<version>7</version>
 	</parent>
- 
+
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
@@ -50,5 +50,17 @@
 		<developerConnection>scm:git:https://code.google.com/p/write-it-once/</developerConnection>
 		<url>http://code.google.com/p/write-it-once/source/browse</url>
 	</scm>
-
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
+				<configuration>
+					<source>1.5</source>
+					<target>1.5</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>
