@@ -6,6 +6,7 @@ package org.simart.writeonce.common;
  * @author Wojciech Kołodziej
  * 
  */
+@Deprecated
 public interface EnumDescriptor extends ElementaryDescriptor {
 
     /**
@@ -13,6 +14,7 @@ public interface EnumDescriptor extends ElementaryDescriptor {
      * 
      * @return
      */
+    @Deprecated
     Boolean isEnum();
 
     /**
@@ -20,5 +22,6 @@ public interface EnumDescriptor extends ElementaryDescriptor {
      * 
      * @return
      */
+    @Deprecated
     Object[] getEnums();
 }

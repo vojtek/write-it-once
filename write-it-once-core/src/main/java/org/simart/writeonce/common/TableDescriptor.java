@@ -13,6 +13,7 @@ import javax.persistence.Table;
  * @author Wojciech Kołodziej
  * 
  */
+@Deprecated
 public interface TableDescriptor extends ElementaryDescriptor {
 
     /**
@@ -20,6 +21,7 @@ public interface TableDescriptor extends ElementaryDescriptor {
      * 
      * @return
      */
+    @Deprecated
     String getSchema();
 
     /**
@@ -27,6 +29,7 @@ public interface TableDescriptor extends ElementaryDescriptor {
      * 
      * @return
      */
+    @Deprecated
     String getName();
 
     /**
@@ -34,6 +37,7 @@ public interface TableDescriptor extends ElementaryDescriptor {
      * 
      * @return
      */
+    @Deprecated
     ColumnDescriptor getSinglePrimaryKey();
 
     /**
@@ -41,6 +45,7 @@ public interface TableDescriptor extends ElementaryDescriptor {
      * 
      * @return
      */
+    @Deprecated
     Map<String, ColumnDescriptor> getColumn();
 
     /**
@@ -48,6 +53,7 @@ public interface TableDescriptor extends ElementaryDescriptor {
      * 
      * @return
      */
+    @Deprecated
     ColumnDescriptor[] getColumns();
 
 }
