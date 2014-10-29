@@ -17,7 +17,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.reflections.ReflectionUtils;
-import org.simart.writeonce.common.ClassDescriptor;
 import org.simart.writeonce.common.ColumnDescriptor;
 import org.simart.writeonce.common.Help;
 import org.simart.writeonce.common.TableDescriptor;
@@ -63,7 +62,7 @@ public class TableDescriptorImpl implements TableDescriptor {
 
     @Override
     public String getName() {
-        return table == null ? context.getTableNameResolver().getName(context.create(ClassDescriptor.class, cls)) : table.name();
+        return table == null ? context.getTableNameResolver().getName(cls) : table.name();
     }
 
     @Override

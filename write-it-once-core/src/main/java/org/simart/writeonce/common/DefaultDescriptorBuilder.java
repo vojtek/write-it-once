@@ -20,7 +20,7 @@ public class DefaultDescriptorBuilder<E extends Object> implements DescriptorBui
     }
 
     @Override
-    public Descriptor build(Object object) {
+    public Descriptor<E> build(E object) {
         return Descriptors.newDescriptor(object, content);
     }
 

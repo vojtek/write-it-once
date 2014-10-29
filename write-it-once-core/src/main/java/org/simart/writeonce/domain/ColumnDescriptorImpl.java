@@ -9,7 +9,9 @@ import org.simart.writeonce.common.BeanMethodDescriptor;
 import org.simart.writeonce.common.ColumnDescriptor;
 import org.simart.writeonce.common.ColumnNameResolver;
 import org.simart.writeonce.common.ColumnTypeResolver;
+import org.simart.writeonce.common.Descriptor;
 import org.simart.writeonce.common.Help;
+import org.simart.writeonce.common.builder.MethodDescriptorBuilder;
 
 public class ColumnDescriptorImpl implements ColumnDescriptor {
 
@@ -26,10 +28,11 @@ public class ColumnDescriptorImpl implements ColumnDescriptor {
         this.column = this.field.getAnnotation(Column.class);
     }
 
+    @SuppressWarnings("unchecked")
     public ColumnDescriptorImpl(Context context, Method method) {
         super();
         this.context = context;
-        this.field = null;
+        this.field = ((Descriptor<Field>) MethodDescriptorBuilder.ACTION_PROPERTY.execute(method)).getData();
         this.method = method;
         this.column = this.method.getAnnotation(Column.class);
     }
@@ -57,9 +60,9 @@ public class ColumnDescriptorImpl implements ColumnDescriptor {
             throw new RuntimeException("undefined column type resolver");
         }
         if (this.field != null) {
-            return columnTypeResolver.getType(column, this.field.getType(), field, method);
+            return columnTypeResolver.getType(column, this.field.getType(), field);
         } else {
-            return columnTypeResolver.getType(column, this.method.getReturnType(), field, method);
+            return columnTypeResolver.getType(column, this.method.getReturnType(), field);
         }
     }
 
@@ -70,9 +73,9 @@ public class ColumnDescriptorImpl implements ColumnDescriptor {
             throw new RuntimeException("undefined column type resolver");
         }
         if (this.field != null) {
-            return columnTypeResolver.getFullType(column, this.field.getType(), field, method);
+            return columnTypeResolver.getFullType(column, this.field.getType(), field);
         } else {
-            return columnTypeResolver.getFullType(column, this.method.getReturnType(), field, method);
+            return columnTypeResolver.getFullType(column, this.method.getReturnType(), field);
         }
     }
 

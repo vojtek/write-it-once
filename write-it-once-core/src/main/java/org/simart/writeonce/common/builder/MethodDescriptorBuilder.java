@@ -75,28 +75,30 @@ public class MethodDescriptorBuilder extends DefaultDescriptorBuilder<Method> {
             }
         });
 
-        builder.action("property", new Action<Method>() {
-            @Override
-            public Object execute(Method data) {
-                final String name = data.getName();
-                if (name.length() < 4 || !name.matches("(get)|(set)[A-Z0-9].*")) {
-                    return null;
-                }
-                final String propertyName = uncapitalize(name.substring(3));
-                try {
-                    final Field field = data.getDeclaringClass().getDeclaredField(propertyName);
-                    return fieldDescriptorBuilder.build(field);
-                } catch (NoSuchFieldException ex) {
-                    return null;
-                }
-            }
-        });
+        builder.action("property", ACTION_PROPERTY);
 
         // bean methods
         //builder.action("fieldName", null); // todo
 
         return builder;
     }
+
+    public static final Action<Method> ACTION_PROPERTY = new Action<Method>() {
+        @Override
+        public Object execute(Method data) {
+            final String name = data.getName();
+            if (name.length() < 4 || !name.matches("(get)|(set)[A-Z0-9].*")) {
+                return null;
+            }
+            final String propertyName = uncapitalize(name.substring(3));
+            try {
+                final Field field = data.getDeclaringClass().getDeclaredField(propertyName);
+                return fieldDescriptorBuilder.build(field);
+            } catch (NoSuchFieldException ex) {
+                return null;
+            }
+        }
+    };
 
     @SuppressWarnings("unchecked")
     public static List<Method> getAllMethods(Class<?> type) {

@@ -58,37 +58,40 @@ public class FieldDescriptorBuilder extends DefaultDescriptorBuilder<Field> {
             }
         });
 
-        builder.action("getter", new Action<Field>() {
-            @Override
-            public Object execute(Field data) {
-                final String name = data.getName();
-                try {
-                    final Method method = data.getDeclaringClass().getMethod("get" + capitalize(name));
-                    return methodDescriptorBuilder.build(method);
-                } catch (NoSuchMethodException e) {
-                    return null;
-                } catch (SecurityException e) {
-                    return null;
-                }
-            }
-        });
-        builder.action("setter", new Action<Field>() {
-            @Override
-            public Object execute(Field data) {
-                final String name = data.getName();
-                try {
-                    final Method method = data.getDeclaringClass().getMethod("set" + capitalize(name), data.getType());
-                    return methodDescriptorBuilder.build(method);
-                } catch (NoSuchMethodException e) {
-                    return null;
-                } catch (SecurityException e) {
-                    return null;
-                }
-            }
-        });
+        builder.action("getter", ACTION_GETTER);
+        builder.action("setter", ACTION_SETTER);
 
         return builder;
     }
+
+    public static final Action<Field> ACTION_GETTER = new Action<Field>() {
+        @Override
+        public Object execute(Field data) {
+            final String name = data.getName();
+            try {
+                final Method method = data.getDeclaringClass().getMethod("get" + capitalize(name));
+                return methodDescriptorBuilder.build(method);
+            } catch (NoSuchMethodException e) {
+                return null;
+            } catch (SecurityException e) {
+                return null;
+            }
+        }
+    };
+    public static final Action<Field> ACTION_SETTER = new Action<Field>() {
+        @Override
+        public Object execute(Field data) {
+            final String name = data.getName();
+            try {
+                final Method method = data.getDeclaringClass().getMethod("get" + capitalize(name));
+                return methodDescriptorBuilder.build(method);
+            } catch (NoSuchMethodException e) {
+                return null;
+            } catch (SecurityException e) {
+                return null;
+            }
+        }
+    };
 
     @SuppressWarnings("unchecked")
     public static List<Field> getAllFields(Class<?> type) {

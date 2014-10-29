@@ -17,7 +17,7 @@ public class ClassDescriptorBuilder extends DefaultDescriptorBuilder<Class<?>> {
     private static final DescriptorBuilder<Package> packageDescriptorBuilder = PackageDescriptorBuilder.create();
 
     public static DescriptorBuilder<Class<?>> create() {
-        final ClassDescriptorBuilder builder = new ClassDescriptorBuilder();
+        final DescriptorBuilder<Class<?>> builder = new ClassDescriptorBuilder();
 
         builder.action("name", new Action<Class<?>>() {
             @Override

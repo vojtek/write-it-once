@@ -20,3 +20,7 @@
 /target
 /.settings
 test-output
+.settings
+/write-it-once-jpa/.classpath
+/write-it-once-jpa/.gitignore
+/write-it-once-jpa/.project
