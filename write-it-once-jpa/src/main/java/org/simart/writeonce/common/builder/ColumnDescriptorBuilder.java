@@ -11,9 +11,9 @@ import org.simart.writeonce.common.DefaultDescriptorBuilder;
 import org.simart.writeonce.common.Descriptor;
 import org.simart.writeonce.common.DescriptorBuilder;
 import org.simart.writeonce.common.builder.ColumnDescriptorBuilder.Column;
-import org.testng.collections.Lists;
 
 import com.google.common.base.Preconditions;
+import com.google.common.collect.Lists;
 
 public class ColumnDescriptorBuilder extends DefaultDescriptorBuilder<Column> {
 
