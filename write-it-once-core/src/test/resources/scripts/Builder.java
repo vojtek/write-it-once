@@ -6,10 +6,10 @@ public class ${cls.shortName}Builder {
         return new ${cls.name}Builder();
     }
 <% for(field in cls.fields) {%>
-    private ${field.type} ${field.name};
+    private ${field.type.name} ${field.name};
 <% } %>
 <% for(field in cls.fields) {%>
-    public ${cls.name}Builder ${field.name}(${field.type} ${field.name}) {
+    public ${cls.name}Builder ${field.name}(${field.type.name} ${field.name}) {
         this.${field.name} = ${field.name};
         return this;
     }

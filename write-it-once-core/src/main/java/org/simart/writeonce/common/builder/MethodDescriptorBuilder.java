@@ -1,18 +1,17 @@
 package org.simart.writeonce.common.builder;
 
+import static org.reflections.ReflectionUtils.withModifier;
 import static org.reflections.ReflectionUtils.withPrefix;
 import static org.simart.writeonce.utils.StringUtils.uncapitalize;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.util.List;
 
 import org.reflections.ReflectionUtils;
 import org.simart.writeonce.common.Action;
-import org.simart.writeonce.common.DefaultDescriptorBuilder;
-import org.simart.writeonce.common.DescriptorBuilder;
-import org.simart.writeonce.common.Descriptors;
 import org.simart.writeonce.common.builder.MethodParameterDescriptorBuilder.MethodParameter;
 
 import com.google.common.base.Function;
@@ -106,13 +105,18 @@ public class MethodDescriptorBuilder extends DefaultDescriptorBuilder<Method> {
     }
 
     @SuppressWarnings("unchecked")
+    public static List<Method> getPublicMethods(Class<?> type) {
+        return Lists.newArrayList(ReflectionUtils.getAllMethods(type, withModifier(Modifier.PUBLIC)));
+    }
+
+    @SuppressWarnings("unchecked")
     public static List<Method> getGetters(Class<?> type) {
-        return Lists.newArrayList(ReflectionUtils.getAllMethods(type, withPrefix("get")));
+        return Lists.newArrayList(ReflectionUtils.getAllMethods(type, withPrefix("get"), withModifier(Modifier.PUBLIC)));
     }
 
     @SuppressWarnings("unchecked")
     public static List<Method> getSetters(Class<?> type) {
-        return Lists.newArrayList(ReflectionUtils.getAllMethods(type, withPrefix("set")));
+        return Lists.newArrayList(ReflectionUtils.getAllMethods(type, withPrefix("set"), withModifier(Modifier.PUBLIC)));
     }
 
     public static List<MethodDescriptorBuilder> describe(List<Method> methods, Function<Method, MethodDescriptorBuilder> transformer) {

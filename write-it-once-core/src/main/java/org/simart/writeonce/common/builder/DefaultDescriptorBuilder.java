@@ -1,6 +1,8 @@
-package org.simart.writeonce.common;
+package org.simart.writeonce.common.builder;
 
 import java.util.Map;
+
+import org.simart.writeonce.common.Action;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;

@@ -7,9 +7,6 @@ import java.util.List;
 import org.simart.writeonce.common.Action;
 import org.simart.writeonce.common.ColumnNameResolver;
 import org.simart.writeonce.common.ColumnTypeResolver;
-import org.simart.writeonce.common.DefaultDescriptorBuilder;
-import org.simart.writeonce.common.Descriptor;
-import org.simart.writeonce.common.DescriptorBuilder;
 import org.simart.writeonce.common.builder.ColumnDescriptorBuilder.Column;
 
 import com.google.common.base.Preconditions;

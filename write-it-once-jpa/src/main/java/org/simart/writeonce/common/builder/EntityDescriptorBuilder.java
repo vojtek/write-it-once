@@ -8,11 +8,8 @@ import javax.persistence.Id;
 
 import org.reflections.ReflectionUtils;
 import org.simart.writeonce.common.Action;
-import org.simart.writeonce.common.DefaultDescriptorBuilder;
-import org.simart.writeonce.common.DescriptorBuilder;
-import org.simart.writeonce.common.Descriptors;
+import org.simart.writeonce.common.TableNameResolver;
 import org.simart.writeonce.common.builder.EntityDescriptorBuilder.Table;
-import org.simart.writeonce.domain.TableNameResolver;
 
 public class EntityDescriptorBuilder extends DefaultDescriptorBuilder<Table> {
 

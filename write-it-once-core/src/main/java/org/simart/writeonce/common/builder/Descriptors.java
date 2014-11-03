@@ -1,9 +1,11 @@
-package org.simart.writeonce.common;
+package org.simart.writeonce.common.builder;
 
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import org.simart.writeonce.common.Action;
 
 import com.google.common.collect.Maps;
 

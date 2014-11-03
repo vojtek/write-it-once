@@ -1,13 +1,10 @@
 package org.simart.writeitonce.maven.plugin;
 
 import java.io.File;
-import java.io.IOException;
-import java.lang.annotation.Annotation;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.List;
-import java.util.Set;
 
 import org.apache.maven.artifact.DependencyResolutionRequiredException;
 import org.apache.maven.plugin.AbstractMojo;
@@ -18,11 +15,6 @@ import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.plugins.annotations.ResolutionScope;
 import org.apache.maven.project.MavenProject;
-import org.reflections.Reflections;
-import org.simart.writeonce.common.Generator;
-import org.simart.writeonce.common.GeneratorException;
-import org.simart.writeonce.domain.GeneratorBuilder;
-import org.simart.writeonce.utils.FileUtils;
 
 @Mojo(name = "generate", defaultPhase = LifecyclePhase.PROCESS_SOURCES, requiresDependencyResolution = ResolutionScope.RUNTIME)
 public class WriteItOnceMojo extends AbstractMojo {
@@ -37,38 +29,39 @@ public class WriteItOnceMojo extends AbstractMojo {
     // mvn org.simart:write-it-once-plugin:0.2-SNAPSHOT:write-it-once
     public void execute() throws MojoExecutionException, MojoFailureException {
         final URLClassLoader projectClassLoader = getProjectClassLoader();
+        /*
+                getLog().info(String.format("scaning %s", packageName));
+                final Reflections reflections = new Reflections(packageName, projectClassLoader);
 
-        getLog().info(String.format("scaning %s", packageName));
-        final Reflections reflections = new Reflections(packageName, projectClassLoader);
+                final Generator generator = GeneratorBuilder.instance().build();
 
-        final Generator generator = GeneratorBuilder.instance().build();
-
-        for (Unit unit : units) {
-            try {
-                final String template = FileUtils.read(unit.getScriptFile());
-                @SuppressWarnings("unchecked")
-                final Set<Class<?>> datas = reflections.getTypesAnnotatedWith((Class<? extends Annotation>) projectClassLoader.loadClass(unit.getAnnotationName()));
-
-                for (Class<?> data : datas) {
+                for (Unit unit : units) {
                     try {
-                        final String sourceCode = generator.generate(data, template);
-                        final String fileName = generator.generate(data, unit.getGeneratedFileNamePattern());
-                        final String filePath = unit.getGeneratedFileDirectory() + fileName;
+                        final String template = FileUtils.read(unit.getScriptFile());
+                        @SuppressWarnings("unchecked")
+                        final Set<Class<?>> datas = reflections.getTypesAnnotatedWith((Class<? extends Annotation>) projectClassLoader.loadClass(unit.getAnnotationName()));
 
-                        FileUtils.write(filePath, sourceCode);
+                        for (Class<?> data : datas) {
+                            try {
+                                final String sourceCode = generator.generate(data, template);
+                                final String fileName = generator.generate(data, unit.getGeneratedFileNamePattern());
+                                final String filePath = unit.getGeneratedFileDirectory() + fileName;
+
+                                FileUtils.write(filePath, sourceCode);
+                            } catch (IOException e) {
+                                this.getLog().error(String.format("class: %s", data.getName()), e);
+                                throw e;
+                            }
+                        }
+                    } catch (ClassNotFoundException e) {
+                        this.getLog().error(String.format("annotation: %s, script: %s", unit.getAnnotationName(), unit.getScriptFile()), e);
                     } catch (IOException e) {
-                        this.getLog().error(String.format("class: %s", data.getName()), e);
-                        throw e;
+                        this.getLog().error(String.format("annotation: %s, script: %s", unit.getAnnotationName(), unit.getScriptFile()), e);
+                    } catch (GeneratorException e) {
+                        this.getLog().error(String.format("annotation: %s, script: %s", unit.getAnnotationName(), unit.getScriptFile()), e);
                     }
                 }
-            } catch (ClassNotFoundException e) {
-                this.getLog().error(String.format("annotation: %s, script: %s", unit.getAnnotationName(), unit.getScriptFile()), e);
-            } catch (IOException e) {
-                this.getLog().error(String.format("annotation: %s, script: %s", unit.getAnnotationName(), unit.getScriptFile()), e);
-            } catch (GeneratorException e) {
-                this.getLog().error(String.format("annotation: %s, script: %s", unit.getAnnotationName(), unit.getScriptFile()), e);
-            }
-        }
+                */
     }
 
     private URLClassLoader getProjectClassLoader() throws MojoExecutionException {

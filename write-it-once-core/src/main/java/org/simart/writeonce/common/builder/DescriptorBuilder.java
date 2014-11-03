@@ -1,6 +1,8 @@
-package org.simart.writeonce.common;
+package org.simart.writeonce.common.builder;
 
 import java.util.Map;
+
+import org.simart.writeonce.common.Action;
 
 public interface DescriptorBuilder<E extends Object> {
 

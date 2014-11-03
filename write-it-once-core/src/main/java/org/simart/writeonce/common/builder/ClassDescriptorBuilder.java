@@ -5,9 +5,6 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 import org.simart.writeonce.common.Action;
-import org.simart.writeonce.common.DefaultDescriptorBuilder;
-import org.simart.writeonce.common.DescriptorBuilder;
-import org.simart.writeonce.common.Descriptors;
 
 public class ClassDescriptorBuilder extends DefaultDescriptorBuilder<Class<?>> {
 
@@ -42,13 +39,19 @@ public class ClassDescriptorBuilder extends DefaultDescriptorBuilder<Class<?>> {
         builder.action("methods", new Action<Class<?>>() {
             @Override
             public Object execute(final Class<?> data) {
-                return DescriptorBuilders.build(methodDescriptorBuilder, MethodDescriptorBuilder.getAllMethods(data));
+                return DescriptorBuilders.build(methodDescriptorBuilder, MethodDescriptorBuilder.getPublicMethods(data));
             }
         });
         builder.action("method", new Action<Class<?>>() {
             @Override
             public Object execute(final Class<?> data) {
                 return Descriptors.extract("name", DescriptorBuilders.build(methodDescriptorBuilder, MethodDescriptorBuilder.getAllMethods(data)));
+            }
+        });
+        builder.action("allMethods", new Action<Class<?>>() {
+            @Override
+            public Object execute(final Class<?> data) {
+                return DescriptorBuilders.build(methodDescriptorBuilder, MethodDescriptorBuilder.getAllMethods(data));
             }
         });
         builder.action("getters", new Action<Class<?>>() {
@@ -79,7 +82,13 @@ public class ClassDescriptorBuilder extends DefaultDescriptorBuilder<Class<?>> {
         builder.action("fields", new Action<Class<?>>() {
             @Override
             public Object execute(final Class<?> data) {
-                return DescriptorBuilders.build(fieldDescriptorBuilder, FieldDescriptorBuilder.getAllFields(data));
+                return DescriptorBuilders.build(fieldDescriptorBuilder, FieldDescriptorBuilder.getNonStaticFields(data));
+            }
+        });
+        builder.action("staticFields", new Action<Class<?>>() {
+            @Override
+            public Object execute(final Class<?> data) {
+                return DescriptorBuilders.build(fieldDescriptorBuilder, FieldDescriptorBuilder.getStaticFields(data));
             }
         });
         builder.action("field", new Action<Class<?>>() {

@@ -1,18 +1,8 @@
 package org.simart.writeonce.application;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.Set;
-
-import org.reflections.Reflections;
-import org.simart.writeonce.common.Generator;
-import org.simart.writeonce.common.GeneratorException;
-import org.simart.writeonce.domain.Describe;
-import org.simart.writeonce.domain.GeneratorBuilder;
-import org.simart.writeonce.domain.OracleSqlTypeResolver;
-import org.simart.writeonce.utils.FileUtils;
 
 public class TextClassDescriptorGenerator {
+    /*
     private static final String generatedFilePatch = "src\\generated\\resources\\";
 
     public static void main(String[] args) throws GeneratorException, IOException {
@@ -33,4 +23,5 @@ public class TextClassDescriptorGenerator {
         }
 
     }
+    */
 }

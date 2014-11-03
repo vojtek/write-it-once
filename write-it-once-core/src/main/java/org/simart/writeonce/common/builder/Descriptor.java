@@ -1,4 +1,4 @@
-package org.simart.writeonce.common;
+package org.simart.writeonce.common.builder;
 
 import java.util.Map;
 

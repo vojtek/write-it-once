@@ -1,4 +1,4 @@
-package org.simart.writeonce.domain;
+package org.simart.writeonce.common;
 
 public interface TableNameResolver {
 

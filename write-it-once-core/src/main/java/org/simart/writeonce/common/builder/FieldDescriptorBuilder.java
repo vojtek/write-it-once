@@ -1,19 +1,20 @@
 package org.simart.writeonce.common.builder;
 
+import static org.reflections.ReflectionUtils.withModifier;
 import static org.simart.writeonce.utils.StringUtils.capitalize;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.util.List;
+import java.util.Set;
 
 import org.reflections.ReflectionUtils;
 import org.simart.writeonce.common.Action;
-import org.simart.writeonce.common.DefaultDescriptorBuilder;
-import org.simart.writeonce.common.DescriptorBuilder;
-import org.simart.writeonce.common.Descriptors;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 
 public class FieldDescriptorBuilder extends DefaultDescriptorBuilder<Field> {
 
@@ -83,7 +84,7 @@ public class FieldDescriptorBuilder extends DefaultDescriptorBuilder<Field> {
         public Object execute(Field data) {
             final String name = data.getName();
             try {
-                final Method method = data.getDeclaringClass().getMethod("get" + capitalize(name));
+                final Method method = data.getDeclaringClass().getMethod("set" + capitalize(name), data.getType());
                 return methodDescriptorBuilder.build(method);
             } catch (NoSuchMethodException e) {
                 return null;
@@ -96,6 +97,17 @@ public class FieldDescriptorBuilder extends DefaultDescriptorBuilder<Field> {
     @SuppressWarnings("unchecked")
     public static List<Field> getAllFields(Class<?> type) {
         return Lists.newArrayList(ReflectionUtils.getAllFields(type));
+    }
+
+    @SuppressWarnings("unchecked")
+    public static List<Field> getNonStaticFields(Class<?> type) {
+        final Set<Field> fields = Sets.difference(ReflectionUtils.getAllFields(type), ReflectionUtils.getAllFields(type, withModifier(Modifier.STATIC)));
+        return Lists.newArrayList(fields);
+    }
+
+    @SuppressWarnings("unchecked")
+    public static List<Field> getStaticFields(Class<?> type) {
+        return Lists.newArrayList(ReflectionUtils.getAllFields(type, withModifier(Modifier.STATIC)));
     }
 
 }
