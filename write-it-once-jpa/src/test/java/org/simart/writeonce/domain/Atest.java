@@ -10,8 +10,6 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-@Describe
-@Builder(alias = "xxx")
 @Entity
 @Table(name = "A_TEST", schema = "TEST")
 public class Atest implements Serializable {
