@@ -4,7 +4,7 @@
 	<groupId>org.simart</groupId>
 	<artifactId>write-it-once</artifactId>
 	<packaging>pom</packaging>
-	<version>0.6.2-SNAPSHOT</version>
+	<version>0.6.2</version>
 	<name>write-it-once</name>
 
 	<modules>
