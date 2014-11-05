@@ -8,8 +8,6 @@ import java.io.Serializable;
  * @author Wojtek
  *
  */
-@Describe
-@Builder(alias = "xxx")
 public class Atest implements Serializable {
 
     private static final long serialVersionUID = -3871878166637693521L;

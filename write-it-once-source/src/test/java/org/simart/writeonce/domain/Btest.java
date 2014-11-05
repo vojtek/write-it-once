@@ -1,7 +1,5 @@
 package org.simart.writeonce.domain;
 
-
-@Describe
 public class Btest {
 
     private Long id;
