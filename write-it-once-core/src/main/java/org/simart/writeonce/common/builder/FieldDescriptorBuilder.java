@@ -22,7 +22,7 @@ public class FieldDescriptorBuilder extends DefaultDescriptorBuilder<Field> {
     private static final DescriptorBuilder<Method> methodDescriptorBuilder = MethodDescriptorBuilder.create();
     private static final DescriptorBuilder<Annotation> annotationDescriptorBuilder = AnnotationDescriptorBuilder.create();
 
-    public static DescriptorBuilder<Field> create() {
+    public static FieldDescriptorBuilder create() {
         final FieldDescriptorBuilder builder = new FieldDescriptorBuilder();
 
         builder.action("name", new Action<Field>() {

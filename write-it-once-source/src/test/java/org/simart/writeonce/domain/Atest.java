@@ -8,8 +8,6 @@ import java.io.Serializable;
  * @author Wojtek
  *
  */
-// inline class comment
-/* block class comment */
 @Describe
 @Builder(alias = "xxx")
 public class Atest implements Serializable {

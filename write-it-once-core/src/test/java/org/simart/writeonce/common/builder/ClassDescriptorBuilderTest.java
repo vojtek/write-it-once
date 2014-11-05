@@ -2,6 +2,7 @@ package org.simart.writeonce.common.builder;
 
 import static org.fest.assertions.Assertions.assertThat;
 
+import java.io.File;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Map;
@@ -42,5 +43,14 @@ public class ClassDescriptorBuilderTest {
     public void enumeration() throws SecurityException, NoSuchFieldException {
         final Enumek[] values = (Enumek[]) ClassDescriptorBuilder.create().build(Enumek.class).get("enums");
         assertThat(values).containsOnly(Enumek.OPTION_1, Enumek.OPTION_2);
+    }
+
+    @Test
+    public void patch() throws SecurityException, NoSuchFieldException {
+        final String result = (String) ClassDescriptorBuilder.create()
+                .sourcePatch("src" + File.separator + "test" + File.separator + "java" + File.separator)
+                .build(Atest.class).get("patch");
+        assertThat(result).isNotNull();
+        assertThat(new File(result).exists()).isTrue();
     }
 }

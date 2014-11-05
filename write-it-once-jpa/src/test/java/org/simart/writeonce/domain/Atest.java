@@ -21,7 +21,6 @@ public class Atest implements Serializable {
     private Long id;
     @Column(name = "AT_EST", insertable = true, nullable = false, length = 30)
     private String atestField;
-    @ManyToOne
     private Btest btest;
 
     public String getAtestField() {
@@ -40,6 +39,8 @@ public class Atest implements Serializable {
         this.id = id;
     }
 
+    @Column(name = "B_TEST")
+    @ManyToOne
     public Btest getBtest() {
         return btest;
     }

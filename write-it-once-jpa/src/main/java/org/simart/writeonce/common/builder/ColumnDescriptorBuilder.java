@@ -104,7 +104,7 @@ public class ColumnDescriptorBuilder extends DefaultDescriptorBuilder<Column> {
         if (column == null) {
             column = field.getAnnotation(javax.persistence.Column.class);
         }
-        return new Column(field.getAnnotation(javax.persistence.Column.class), field);
+        return new Column(column, field);
     }
 
     public static class Column {

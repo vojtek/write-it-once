@@ -24,3 +24,6 @@ test-output
 /write-it-once-jpa/.classpath
 /write-it-once-jpa/.gitignore
 /write-it-once-jpa/.project
+/write-it-once-source/.classpath
+/write-it-once-source/.gitignore
+/write-it-once-source/.project

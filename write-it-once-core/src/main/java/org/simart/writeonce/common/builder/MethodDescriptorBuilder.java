@@ -86,7 +86,7 @@ public class MethodDescriptorBuilder extends DefaultDescriptorBuilder<Method> {
         @Override
         public Object execute(Method data) {
             final String name = data.getName();
-            if (name.length() < 4 || !name.matches("(get)|(set)[A-Z0-9].*")) {
+            if (name.length() < 4 || !name.matches("((get)|(set))[A-Z0-9].*")) {
                 return null;
             }
             final String propertyName = uncapitalize(name.substring(3));

@@ -17,7 +17,7 @@ public class EntityDescriptorBuilder extends DefaultDescriptorBuilder<Table> {
     private final static DescriptorBuilder<Class<?>> classDescriptorBuilder = ClassDescriptorBuilder.create();
 
     public static EntityDescriptorBuilder create() {
-        final EntityDescriptorBuilder builder = EntityDescriptorBuilder.create();
+        final EntityDescriptorBuilder builder = new EntityDescriptorBuilder();
 
         builder.action("schema", new Action<Table>() {
             @Override

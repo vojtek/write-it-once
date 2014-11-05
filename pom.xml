@@ -10,6 +10,7 @@
 	<modules>
 		<module>write-it-once-core</module>
 		<module>write-it-once-jpa</module>
+		<module>write-it-once-source</module>
 		<module>write-it-once-plugin</module>
 		<module>write-it-once-cmd-tool</module>
 	</modules>

@@ -3,11 +3,14 @@ package org.simart.writeonce.application;
 import static org.fest.assertions.Assertions.assertThat;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Set;
 
 import org.reflections.Reflections;
+import org.simart.writeonce.common.Action;
 import org.simart.writeonce.common.GeneratorException;
 import org.simart.writeonce.common.builder.ClassDescriptorBuilder;
+import org.simart.writeonce.common.builder.DescriptorBuilder;
 import org.simart.writeonce.common.builder.DescriptorBuilders;
 import org.simart.writeonce.domain.Atest;
 import org.simart.writeonce.domain.Builder;
@@ -49,5 +52,32 @@ public class FlexibleGeneratorImplTest {
             // then
             FileUtils.write(filePath, sourceCode);
         }
+    }
+
+    @Test
+    public void extend() throws GeneratorException {
+        // given
+        final FlexibleGenerator generator = FlexibleGenerator.create("XXX${cls.name} ${cls.someValue} ${cls.isEnum} ${cls.interfaces[0].name}");
+
+        final DescriptorBuilder<Class<?>> descriptorBuilder = ClassDescriptorBuilder.create()
+                .action("isEnum", new Action<Class<?>>() {
+                    @Override
+                    public Object execute(Class<?> data) {
+                        return data.isEnum();
+                    }
+                })
+                .action("interfaces", new Action<Class<?>>() {
+                    @Override
+                    public Object execute(Class<?> data) {
+                        return DescriptorBuilders.build(ClassDescriptorBuilder.create(), Arrays.asList(data.getInterfaces()));
+                    }
+                })
+                .value("someValue", "YYYY");
+
+        // when
+        generator.descriptor("cls", descriptorBuilder);
+
+        // then
+        assertThat(generator.bind("cls", Atest.class).generate()).isEqualTo("XXXorg.simart.writeonce.domain.Atest YYYY false java.io.Serializable");
     }
 }
