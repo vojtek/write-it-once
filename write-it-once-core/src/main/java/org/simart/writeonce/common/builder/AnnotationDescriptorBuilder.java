@@ -6,47 +6,52 @@ import java.lang.reflect.Method;
 import java.util.List;
 
 import org.reflections.ReflectionUtils;
+import org.simart.writeonce.application.Context;
 import org.simart.writeonce.common.Action;
 
 import com.google.common.collect.Lists;
 
 public class AnnotationDescriptorBuilder extends DefaultDescriptorBuilder<Annotation> {
 
-    private final static DescriptorBuilder<Class<?>> classDescriptorBuilder = ClassDescriptorBuilder.create();
-
     public static DescriptorBuilder<Annotation> create() {
-        final AnnotationDescriptorBuilder builder = new AnnotationDescriptorBuilder();
+	final AnnotationDescriptorBuilder builder = new AnnotationDescriptorBuilder();
 
-        builder.action("type", new Action<Annotation>() {
-            @Override
-            public Object execute(Annotation data) {
-                return classDescriptorBuilder.build(data.annotationType());
-            }
-        });
+	builder.action("name", new Action<Annotation>() {
+	    @Override
+	    public Object execute(Annotation data, Context context) {
+		return context.getBuilder(Class.class).build(data.annotationType(), context).get("name");
+	    }
+	});
+	builder.action("type", new Action<Annotation>() {
+	    @Override
+	    public Object execute(Annotation data, Context context) {
+		return context.getBuilder(Class.class).build(data.annotationType(), context);
+	    }
+	});
 
-        builder.action("attribute", new Action<Annotation>() {
-            @Override
-            public Object execute(Annotation data) {
-                return data;
-            }
-        });
+	builder.action("attribute", new Action<Annotation>() {
+	    @Override
+	    public Object execute(Annotation data, Context context) {
+		return data;
+	    }
+	});
 
-        return builder;
+	return builder;
     }
 
     @SuppressWarnings("unchecked")
     public static List<Annotation> getAllAnnotations(Class<?> type) {
-        return Lists.newArrayList(ReflectionUtils.getAllAnnotations(type));
+	return Lists.newArrayList(ReflectionUtils.getAllAnnotations(type));
     }
 
     @SuppressWarnings("unchecked")
     public static List<Annotation> getAllAnnotations(Method type) {
-        return Lists.newArrayList(ReflectionUtils.getAllAnnotations(type));
+	return Lists.newArrayList(ReflectionUtils.getAllAnnotations(type));
     }
 
     @SuppressWarnings("unchecked")
     public static List<Annotation> getAllAnnotations(Field type) {
-        return Lists.newArrayList(ReflectionUtils.getAllAnnotations(type));
+	return Lists.newArrayList(ReflectionUtils.getAllAnnotations(type));
     }
 
 }

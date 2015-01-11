@@ -10,10 +10,11 @@ import java.io.Serializable;
  */
 // inline class comment
 /* block class comment */
-@Describe
+@Describe("Annotation DSC")
 @Builder(alias = "xxx")
 public class Atest implements Serializable {
 
+    private static final String DATA = "Static data";
     private static final long serialVersionUID = -3871878166637693521L;
 
     private Long id;
@@ -21,27 +22,27 @@ public class Atest implements Serializable {
     private Btest btest;
 
     public String getAtestField() {
-        return atestField;
+	return atestField;
     }
 
     public void setAtestField(String atestField) {
-        this.atestField = atestField;
+	this.atestField = atestField;
     }
 
     public Long getId() {
-        return id;
+	return id;
     }
 
     public void setId(Long id) {
-        this.id = id;
+	this.id = id;
     }
 
     public Btest getBtest() {
-        return btest;
+	return btest;
     }
 
     public void setBtest(Btest btest) {
-        this.btest = btest;
+	this.btest = btest;
     }
 
 }

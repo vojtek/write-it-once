@@ -5,14 +5,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.simart.writeonce.application.Context;
 import org.simart.writeonce.common.Action;
 
 import com.google.common.collect.Maps;
 
 public class Descriptors {
 
-    public static <E extends Object> Descriptor<E> newDescriptor(E data, Map<String, Object> content) {
-        return new DefaultDescriptor<E>(data, content);
+    public static <E extends Object> Descriptor<E> newDescriptor(E data, Map<String, Object> content, Context context) {
+        return new DefaultDescriptor<E>(data, content, context);
     }
 
     public static <E> Map<String, Descriptor<E>> extract(String field, List<Descriptor<E>> descriptors) {
@@ -28,12 +29,14 @@ public class Descriptors {
 
     public static class DefaultDescriptor<E extends Object> implements Descriptor<E> {
         private final E data;
+        private final Context context;
         private final Map<String, Object> content = Maps.newHashMap();
 
-        public DefaultDescriptor(E data, Map<String, Object> content) {
+        public DefaultDescriptor(E data, Map<String, Object> content, Context context) {
             super();
             this.content.putAll(content);
             this.data = data;
+            this.context = context;
         }
 
         @Override
@@ -62,7 +65,7 @@ public class Descriptors {
             if (value instanceof Action) {
                 @SuppressWarnings("unchecked")
                 final Action<E> action = (Action<E>) value;
-                return action.execute(data);
+                return action.execute(data, context);
             }
             return value;
         }

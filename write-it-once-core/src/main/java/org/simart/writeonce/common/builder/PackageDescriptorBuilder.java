@@ -2,6 +2,7 @@ package org.simart.writeonce.common.builder;
 
 import java.io.File;
 
+import org.simart.writeonce.application.Context;
 import org.simart.writeonce.common.Action;
 
 public class PackageDescriptorBuilder extends DefaultDescriptorBuilder<Package> {
@@ -11,14 +12,14 @@ public class PackageDescriptorBuilder extends DefaultDescriptorBuilder<Package> 
 
         buider.action("name", new Action<Package>() {
             @Override
-            public Object execute(Package data) {
+            public Object execute(Package data, Context context) {
                 return data.getName();
             }
         });
 
         buider.action("path", new Action<Package>() {
             @Override
-            public Object execute(Package data) {
+            public Object execute(Package data, Context context) {
                 final String[] parts = data.getName().split("\\.");
                 final StringBuilder result = new StringBuilder();
                 result.append(buider.sourcePatch);

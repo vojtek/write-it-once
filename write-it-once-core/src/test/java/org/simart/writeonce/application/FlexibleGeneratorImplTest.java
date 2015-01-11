@@ -9,9 +9,8 @@ import java.util.Set;
 import org.reflections.Reflections;
 import org.simart.writeonce.common.Action;
 import org.simart.writeonce.common.GeneratorException;
-import org.simart.writeonce.common.builder.ClassDescriptorBuilder;
-import org.simart.writeonce.common.builder.DescriptorBuilder;
 import org.simart.writeonce.common.builder.DescriptorBuilders;
+import org.simart.writeonce.common.builder.ReflectionPlugin;
 import org.simart.writeonce.domain.Atest;
 import org.simart.writeonce.domain.Builder;
 import org.simart.writeonce.utils.FileUtils;
@@ -21,63 +20,67 @@ public class FlexibleGeneratorImplTest {
 
     @Test
     public void standard() throws GeneratorException {
-        // given
-        final FlexibleGenerator generator = FlexibleGenerator.create("XXX${cls.name}");
+	// given
+	final FlexibleGenerator generator = FlexibleGenerator.create("XXX${cls.name}");
+	ReflectionPlugin.configure(generator);
 
-        // when 
-        final String result = generator.bind("cls", ClassDescriptorBuilder.create(), Atest.class).generate();
+	// when
+	final String result = generator.evaluate("cls", Class.class, Atest.class).generate();
 
-        // then
-        assertThat(result).isEqualTo("XXXorg.simart.writeonce.domain.Atest");
+	// then
+	assertThat(result).isEqualTo("XXXorg.simart.writeonce.domain.Atest");
     }
 
     @Test
     public void template() throws IOException, GeneratorException {
-        // given 
-        final String generatedFilePatch = "src\\generated\\java\\";
-        final Reflections reflections = new Reflections("org.simart.writeonce.domain");
-        final Set<Class<?>> datas = reflections.getTypesAnnotatedWith(Builder.class);
+	// given
+	final String generatedFilePatch = "src\\generated\\java\\";
+	final Reflections reflections = new Reflections("org.simart.writeonce.domain");
+	final Set<Class<?>> datas = reflections.getTypesAnnotatedWith(Builder.class);
 
-        final String template = FileUtils.read("src\\test\\resources\\scripts\\Builder.java");
-        final FlexibleGenerator generator = FlexibleGenerator.create(template);
+	final String template = FileUtils.read("src\\test\\resources\\scripts\\Builder.java");
+	final FlexibleGenerator generator = FlexibleGenerator.create(template);
+	ReflectionPlugin.configure(generator);
 
-        generator.descriptor("cls", DescriptorBuilders.createClassDescriptorBuilder());
+	generator.bind("cls", Class.class);
 
-        for (Class<?> data : datas) {
-            // when
-            final String sourceCode = generator.bind("cls", data).generate();
-            final String fileName = generator.generate("${cls.package.path}${cls.shortName}Builder.java");
-            final String filePath = generatedFilePatch + fileName;
+	for (Class<?> data : datas) {
+	    // when
+	    final String sourceCode = generator.evaluate("cls", data).generate();
+	    final String fileName = generator.generate("${cls.package.path}${cls.shortName}Builder.java");
+	    final String filePath = generatedFilePatch + fileName;
 
-            // then
-            FileUtils.write(filePath, sourceCode);
-        }
+	    // then
+	    FileUtils.write(filePath, sourceCode);
+	}
     }
 
+    @SuppressWarnings("rawtypes")
     @Test
     public void extend() throws GeneratorException {
-        // given
-        final FlexibleGenerator generator = FlexibleGenerator.create("XXX${cls.name} ${cls.someValue} ${cls.isEnum} ${cls.interfaces[0].name}");
+	// given
+	final FlexibleGenerator generator = FlexibleGenerator.create("XXX${cls.name} ${cls.someValue} ${cls.isEnum} ${cls.interfaces[0].name}");
+	ReflectionPlugin.configure(generator);
 
-        final DescriptorBuilder<Class<?>> descriptorBuilder = ClassDescriptorBuilder.create()
-                .action("isEnum", new Action<Class<?>>() {
-                    @Override
-                    public Object execute(Class<?> data) {
-                        return data.isEnum();
-                    }
-                })
-                .action("interfaces", new Action<Class<?>>() {
-                    @Override
-                    public Object execute(Class<?> data) {
-                        return DescriptorBuilders.build(ClassDescriptorBuilder.create(), Arrays.asList(data.getInterfaces()));
-                    }
-                })
-                .value("someValue", "YYYY");
+	generator.getContext().getBuilder(Class.class)
+		.action("isEnum", new Action<Class>() {
+		    @Override
+		    public Object execute(Class data, Context context) {
+			return data.isEnum();
+		    }
+		})
+		.action("interfaces", new Action<Class>() {
+		    @Override
+		    public Object execute(Class data, Context context) {
+			return DescriptorBuilders.build(context.getBuilder(Class.class), Arrays.asList(data.getInterfaces()), context);
+		    }
+		})
+		.value("someValue", "YYYY");
 
-        // when
-        generator.descriptor("cls", descriptorBuilder);
+	// when
+	generator.bind("cls", Class.class);
 
-        // then
-        assertThat(generator.bind("cls", Atest.class).generate()).isEqualTo("XXXorg.simart.writeonce.domain.Atest YYYY false java.io.Serializable");
+	// then
+	assertThat(generator.evaluate("cls", Atest.class).generate()).isEqualTo("XXXorg.simart.writeonce.domain.Atest YYYY false java.io.Serializable");
     }
 }

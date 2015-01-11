@@ -6,42 +6,43 @@ import japa.parser.ast.body.ClassOrInterfaceDeclaration;
 
 import java.util.Iterator;
 
+import org.simart.writeonce.application.Context;
 import org.simart.writeonce.common.Action;
 
 public class SourceClassDescriptorBuilder extends DefaultDescriptorBuilder<ClassOrInterfaceDeclaration> {
 
     public static SourceClassDescriptorBuilder create() {
-        final SourceClassDescriptorBuilder builder = new SourceClassDescriptorBuilder();
+	final SourceClassDescriptorBuilder builder = new SourceClassDescriptorBuilder();
 
-        builder.action("javadoc", new Action<ClassOrInterfaceDeclaration>() {
-            @Override
-            public Object execute(ClassOrInterfaceDeclaration data) {
-                return data.getJavaDoc() != null ? data.getJavaDoc().getContent() : null;
-            }
-        });
+	builder.action("javadoc", new Action<ClassOrInterfaceDeclaration>() {
+	    @Override
+	    public Object execute(ClassOrInterfaceDeclaration data, Context context) {
+		return data.getJavaDoc() != null ? data.getJavaDoc().getContent() : null;
+	    }
+	});
 
-        builder.action("comment", new Action<ClassOrInterfaceDeclaration>() {
-            @Override
-            public Object execute(ClassOrInterfaceDeclaration data) {
-                return data.getComment() != null ? data.getComment().getContent() : null;
-            }
-        });
+	builder.action("comment", new Action<ClassOrInterfaceDeclaration>() {
+	    @Override
+	    public Object execute(ClassOrInterfaceDeclaration data, Context context) {
+		return data.getComment() != null ? data.getComment().getContent() : null;
+	    }
+	});
 
-        return builder;
+	return builder;
     }
 
     public static ClassOrInterfaceDeclaration getClassNode(CompilationUnit cu, Class<?> type) {
-        final Iterator<Node> nodeIt = cu.getChildrenNodes().iterator();
-        while (nodeIt.hasNext()) {
-            final Node node = nodeIt.next();
-            if (node instanceof ClassOrInterfaceDeclaration) {
-                final ClassOrInterfaceDeclaration classOrInterfaceDeclaration = (ClassOrInterfaceDeclaration) node;
-                if (classOrInterfaceDeclaration.getName().equals(type.getSimpleName())) {
-                    return classOrInterfaceDeclaration;
-                }
-            }
-        }
-        return null;
+	final Iterator<Node> nodeIt = cu.getChildrenNodes().iterator();
+	while (nodeIt.hasNext()) {
+	    final Node node = nodeIt.next();
+	    if (node instanceof ClassOrInterfaceDeclaration) {
+		final ClassOrInterfaceDeclaration classOrInterfaceDeclaration = (ClassOrInterfaceDeclaration) node;
+		if (classOrInterfaceDeclaration.getName().equals(type.getSimpleName())) {
+		    return classOrInterfaceDeclaration;
+		}
+	    }
+	}
+	return null;
     }
 
 }

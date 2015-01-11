@@ -2,25 +2,29 @@ package org.simart.writeonce.common.builder;
 
 import static org.fest.assertions.Assertions.assertThat;
 
-import java.util.Map;
-
+import org.simart.writeonce.application.FlexibleGenerator;
+import org.simart.writeonce.common.GeneratorException;
 import org.simart.writeonce.domain.Atest;
-import org.simart.writeonce.domain.Builder;
 import org.testng.annotations.Test;
 
 public class AnnotationDescriptorBuilderTest {
 
     @Test
-    public void type() {
-        @SuppressWarnings("unchecked")
-        final Map<String, Object> descriptors = (Map<String, Object>) AnnotationDescriptorBuilder.create().build(Atest.class.getAnnotation(Builder.class)).get("type");
-        assertThat(descriptors.get("name")).isEqualTo(Builder.class.getName());
+    public void type() throws GeneratorException {
+	// given
+	final FlexibleGenerator generator = FlexibleGenerator.create("${cls.annotation['org.simart.writeonce.domain.Builder'].name}");
+	ReflectionPlugin.configure(generator);
+	// when then
+	assertThat(generator.bind("cls", Class.class).evaluate("cls", Atest.class).generate()).isEqualTo("org.simart.writeonce.domain.Builder");
     }
 
     @Test
-    public void attribute() {
-        final Builder builder = (Builder) AnnotationDescriptorBuilder.create().build(Atest.class.getAnnotation(Builder.class)).get("attribute");
-        assertThat(builder.alias()).isEqualTo("xxx");
+    public void attribute() throws GeneratorException {
+	// given
+	final FlexibleGenerator generator = FlexibleGenerator.create("${cls.annotation['org.simart.writeonce.domain.Builder'].attribute.alias()}");
+	ReflectionPlugin.configure(generator);
+	// when then
+	assertThat(generator.bind("cls", Class.class).evaluate("cls", Atest.class).generate()).isEqualTo("xxx");
     }
 
 }

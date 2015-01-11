@@ -2,6 +2,7 @@ package org.simart.writeonce.common.builder;
 
 import java.util.Map;
 
+import org.simart.writeonce.application.Context;
 import org.simart.writeonce.common.Action;
 
 public interface DescriptorBuilder<E extends Object> {
@@ -12,7 +13,8 @@ public interface DescriptorBuilder<E extends Object> {
 
     DescriptorBuilder<E> merge(DescriptorBuilder<?> descriptorBuilder);
 
-    Descriptor<E> build(E data);
+    Descriptor<E> build(E data, Context context);
 
     Map<String, Object> getContent();
+
 }

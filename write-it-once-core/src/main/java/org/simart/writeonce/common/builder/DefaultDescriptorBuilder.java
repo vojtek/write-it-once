@@ -2,6 +2,7 @@ package org.simart.writeonce.common.builder;
 
 import java.util.Map;
 
+import org.simart.writeonce.application.Context;
 import org.simart.writeonce.common.Action;
 
 import com.google.common.collect.ImmutableMap;
@@ -22,8 +23,8 @@ public class DefaultDescriptorBuilder<E extends Object> implements DescriptorBui
     }
 
     @Override
-    public Descriptor<E> build(E object) {
-        return Descriptors.newDescriptor(object, content);
+    public Descriptor<E> build(E object, Context context) {
+        return Descriptors.newDescriptor(object, content, context);
     }
 
     @Override
@@ -36,4 +37,5 @@ public class DefaultDescriptorBuilder<E extends Object> implements DescriptorBui
     public Map<String, Object> getContent() {
         return ImmutableMap.copyOf(content);
     }
+
 }
