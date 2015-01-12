@@ -8,14 +8,14 @@
 	<parent>
 		<groupId>org.simart</groupId>
 		<artifactId>write-it-once</artifactId>
-		<version>0.6.4-SNAPSHOT</version>
+		<version>0.6.4</version>
 	</parent>
 
 	<dependencies>
 		<dependency>
 			<groupId>org.simart</groupId>
 			<artifactId>write-it-once-core</artifactId>
-			<version>0.6.4-SNAPSHOT</version>
+			<version>0.6.4</version>
 		</dependency>
 		<dependency>
 			<groupId>com.google.code.javaparser</groupId>
