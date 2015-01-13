@@ -26,19 +26,11 @@ public class Context {
 	return builder;
     }
 
-    public void setParameter(String key, Object data) {
-	parameters.put(key, data);
-    }
-
-    public Object getParameter(String key) {
-	return parameters.get(key);
-    }
-
-    public <E> void setHelper(E helper) {
+    public <E> void setHelper(Class<? extends E> type, E helper) {
 	if (helper == null) {
-	    return;
+	    this.helpers.remove(type);
 	}
-	this.helpers.put(helper.getClass(), helper);
+	this.helpers.put(type, helper);
     }
 
     @SuppressWarnings("unchecked")

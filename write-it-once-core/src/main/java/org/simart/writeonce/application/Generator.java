@@ -13,18 +13,19 @@ import org.codehaus.groovy.control.CompilationFailedException;
 import org.simart.writeonce.common.GeneratorException;
 import org.simart.writeonce.common.SourcePath;
 import org.simart.writeonce.common.builder.DescriptorBuilder;
+import org.simart.writeonce.common.builder.ReflectionPlugin;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Maps;
 
-public class FlexibleGenerator {
+public class Generator {
 
-    public static FlexibleGenerator create(String template) throws GeneratorException {
-	return new FlexibleGenerator().template(template);
+    public static Generator create(String template) throws GeneratorException {
+	return new Generator().template(template);
     }
 
-    public static FlexibleGenerator create() throws GeneratorException {
-	return new FlexibleGenerator();
+    public static Generator create() throws GeneratorException {
+	return new Generator();
     }
 
     private final Context context;
@@ -32,7 +33,7 @@ public class FlexibleGenerator {
     private Template compiledTemplate;
     private String lineSeparator;
 
-    public FlexibleGenerator template(String template) throws GeneratorException {
+    public Generator template(String template) throws GeneratorException {
 	Preconditions.checkNotNull(template);
 	final GStringTemplateEngine templateEngine = new GStringTemplateEngine();
 	try {
@@ -48,38 +49,33 @@ public class FlexibleGenerator {
     }
 
     @SuppressWarnings("unchecked")
-    public <E> FlexibleGenerator evaluate(String fieldName, Class<?> builderType, E data) {
+    public <E> Generator bind(String fieldName, Class<?> builderType, E data) {
 	final DescriptorBuilder<E> descriptorBuilder = (DescriptorBuilder<E>) context.getBuilder(builderType);
 	binding.put(fieldName, descriptorBuilder == null ? data : descriptorBuilder.build(data, context));
 	return this;
     }
 
-    public <E> FlexibleGenerator evaluate(String fieldName, E data) {
-	evaluate(fieldName, data.getClass(), data);
+    public <E> Generator bindValue(String fieldName, E data) {
+	bind(fieldName, data.getClass(), data);
 	return this;
     }
 
-    public <E> FlexibleGenerator bind(String fieldName, Class<?> builderType) {
+    public <E> Generator bindBuilder(String fieldName, Class<?> builderType) {
 	binding.put(fieldName, context.getBuilder(builderType));
 	return this;
     }
 
-    public FlexibleGenerator registerBuilder(Class<?> type, DescriptorBuilder<?> descriptorBuilder) {
-	context.register(type, descriptorBuilder);
-	return this;
-    }
-
-    public FlexibleGenerator cleanBindings() {
+    public Generator cleanBuilderBindings() {
 	binding.clear();
 	return this;
     }
 
-    public FlexibleGenerator lineSeparator(String lineSeparator) {
+    public Generator lineSeparator(String lineSeparator) {
 	this.lineSeparator = lineSeparator;
 	return this;
     }
 
-    public <T> FlexibleGenerator register(Class<?> type, DescriptorBuilder<?> descriptorBuilder) {
+    public <T> Generator register(Class<?> type, DescriptorBuilder<?> descriptorBuilder) {
 	context.register(type, descriptorBuilder);
 	return this;
     }
@@ -88,17 +84,13 @@ public class FlexibleGenerator {
 	return context.getBuilder(type);
     }
 
-    public FlexibleGenerator setParameter(String key, Object data) {
-	context.setParameter(key, data);
+    public <E> Generator setHelper(Class<? extends E> type, E helper) {
+	context.setHelper(type, helper);
 	return this;
     }
 
-    public Object getParameter(String key) {
-	return context.getParameter(key);
-    }
-
-    public <E> FlexibleGenerator setHelper(E helper) {
-	context.setHelper(helper);
+    public <E> Generator setHelper(E helper) {
+	context.setHelper(helper.getClass(), helper);
 	return this;
     }
 
@@ -134,9 +126,10 @@ public class FlexibleGenerator {
 	}
     }
 
-    FlexibleGenerator() {
+    Generator() {
 	this.context = createContext();
-	this.setHelper(SourcePath.create("src" + File.separator + "test" + File.separator + "java" + File.separator));
+	this.setHelper(SourcePath.class, SourcePath.create("src" + File.separator + "test" + File.separator + "java" + File.separator));
+	ReflectionPlugin.configure(this);
     }
 
     Context createContext() {

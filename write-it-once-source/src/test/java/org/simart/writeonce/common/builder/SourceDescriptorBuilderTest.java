@@ -5,7 +5,7 @@ import japa.parser.ast.CompilationUnit;
 
 import java.io.File;
 
-import org.simart.writeonce.application.FlexibleGenerator;
+import org.simart.writeonce.application.Generator;
 import org.simart.writeonce.common.GeneratorException;
 import org.simart.writeonce.common.SourcePath;
 import org.simart.writeonce.domain.Atest;
@@ -39,10 +39,10 @@ public class SourceDescriptorBuilderTest {
     @Test
     public void fullGeneratorTest() throws GeneratorException {
 	// given
-	final FlexibleGenerator generator = FlexibleGenerator.create("${cls.name} -> ${cls.comment}").lineSeparator("\n");
+	final Generator generator = Generator.create("${cls.name} -> ${cls.comment}").lineSeparator("\n");
 	SourcePlugin.configure(generator, SOURCE_PATH);
 	// when
-	final String result = generator.bind("cls", Class.class).evaluate("cls", Atest.class).generate();
+	final String result = generator.bind("cls", Class.class, Atest.class).generate();
 	// then
 	assertThat(result).isEqualTo("org.simart.writeonce.domain.Atest -> \n * Javadoc class comment\n * \n * @author Wojtek\n *\n ");
     }

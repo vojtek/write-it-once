@@ -2,7 +2,7 @@ package org.simart.writeonce.common.builder;
 
 import static org.fest.assertions.Assertions.assertThat;
 
-import org.simart.writeonce.application.FlexibleGenerator;
+import org.simart.writeonce.application.Generator;
 import org.simart.writeonce.common.GeneratorException;
 import org.simart.writeonce.domain.Atest;
 import org.simart.writeonce.domain.Enumek;
@@ -18,28 +18,28 @@ public class ClassDescriptorBuilderTest {
     @Test
     public void method() throws NoSuchMethodException, SecurityException, GeneratorException {
 	// given
-	final FlexibleGenerator generator = FlexibleGenerator.create("${cls.method['getId'].name}");
+	final Generator generator = Generator.create("${cls.method['getId'].name}");
 	ReflectionPlugin.configure(generator);
 	// when then
-	assertThat(generator.bind("cls", Class.class).evaluate("cls", Atest.class).generate()).isEqualTo(Atest.class.getMethod("getId").getName());
+	assertThat(generator.bindBuilder("cls", Class.class).bindValue("cls", Atest.class).generate()).isEqualTo(Atest.class.getMethod("getId").getName());
     }
 
     @Test
     public void field() throws SecurityException, NoSuchFieldException, GeneratorException {
 	// given
-	final FlexibleGenerator generator = FlexibleGenerator.create("${cls.field['id'].name}");
+	final Generator generator = Generator.create("${cls.field['id'].name}");
 	ReflectionPlugin.configure(generator);
 	// when then
-	assertThat(generator.bind("cls", Class.class).evaluate("cls", Atest.class).generate()).isEqualTo(Atest.class.getDeclaredField("id").getName());
+	assertThat(generator.bindBuilder("cls", Class.class).bindValue("cls", Atest.class).generate()).isEqualTo(Atest.class.getDeclaredField("id").getName());
     }
 
     @Test
     public void annotation() throws SecurityException, NoSuchFieldException, GeneratorException {
 	// given
-	final FlexibleGenerator generator = FlexibleGenerator.create("${cls.annotation['org.simart.writeonce.domain.Describe'].attribute.value()}");
+	final Generator generator = Generator.create("${cls.annotation['org.simart.writeonce.domain.Describe'].attribute.value()}");
 	ReflectionPlugin.configure(generator);
 	// when then
-	assertThat(generator.bind("cls", Class.class).evaluate("cls", Atest.class).generate()).isEqualTo("Annotation DSC");
+	assertThat(generator.bindBuilder("cls", Class.class).bindValue("cls", Atest.class).generate()).isEqualTo("Annotation DSC");
     }
 
     @Test

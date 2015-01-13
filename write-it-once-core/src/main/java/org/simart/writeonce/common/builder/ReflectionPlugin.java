@@ -4,15 +4,15 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
-import org.simart.writeonce.application.FlexibleGenerator;
+import org.simart.writeonce.application.Generator;
 
 public class ReflectionPlugin {
 
-    public static void configure(FlexibleGenerator generator) {
-	generator.registerBuilder(Class.class, ClassDescriptorBuilder.create());
-	generator.registerBuilder(Field.class, FieldDescriptorBuilder.create());
-	generator.registerBuilder(Method.class, MethodDescriptorBuilder.create());
-	generator.registerBuilder(Annotation.class, AnnotationDescriptorBuilder.create());
-	generator.registerBuilder(Package.class, PackageDescriptorBuilder.create());
+    public static void configure(Generator generator) {
+	generator.register(Class.class, ClassDescriptorBuilder.create());
+	generator.register(Field.class, FieldDescriptorBuilder.create());
+	generator.register(Method.class, MethodDescriptorBuilder.create());
+	generator.register(Annotation.class, AnnotationDescriptorBuilder.create());
+	generator.register(Package.class, PackageDescriptorBuilder.create());
     }
 }

@@ -4,17 +4,17 @@ import japa.parser.ast.CompilationUnit;
 import japa.parser.ast.body.ClassOrInterfaceDeclaration;
 
 import org.simart.writeonce.application.Context;
-import org.simart.writeonce.application.FlexibleGenerator;
+import org.simart.writeonce.application.Generator;
 import org.simart.writeonce.common.Action;
 import org.simart.writeonce.common.SourcePath;
 
 public class SourcePlugin {
 
     @SuppressWarnings("rawtypes")
-    public static void configure(FlexibleGenerator generator, SourcePath sourcePath) {
+    public static void configure(Generator generator, SourcePath sourcePath) {
 	ReflectionPlugin.configure(generator);
 
-	generator.registerBuilder(ClassOrInterfaceDeclaration.class, SourceClassDescriptorBuilder.create());
+	generator.register(ClassOrInterfaceDeclaration.class, SourceClassDescriptorBuilder.create());
 	generator.setHelper(sourcePath);
 
 	generator.getBuilder(Class.class)
