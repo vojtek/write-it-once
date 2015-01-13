@@ -18,9 +18,9 @@ import org.simart.writeonce.common.ColumnNameResolver;
 import org.simart.writeonce.common.ColumnTypeResolver;
 import org.simart.writeonce.common.ColumnTypeResolver.TypeDescriptor;
 import org.simart.writeonce.common.builder.ColumnDescriptorBuilder.Column;
-import org.testng.collections.Maps;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 
 public class ColumnDescriptorBuilder extends DefaultDescriptorBuilder<Column> {

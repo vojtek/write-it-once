@@ -7,7 +7,7 @@ import java.util.Map;
 
 import javax.persistence.Column;
 
-import org.testng.collections.Maps;
+import com.google.common.collect.Maps;
 
 public interface ColumnTypeResolver {
 
