@@ -8,10 +8,12 @@ WRITE-IT-ONCE
 - custom documentation, based on custom annotations, generate XML, DOC, HTML...
 
 **Simplified language**
-// TODO: doc
+```jsp
+${cls.name} // full class name
+${cls.table} // entity table name from jsp @Table annotation
+${cls.column['ID'].annotation['javax.persistence.GeneratedValue'].attribute.strategy()} // this is power of WRITE-IT-ONCE :)
+```
 
-**Easy to extend**
-// TODO: doc
 
 ## Table of Contents
 - [Getting Started](#getting-started)
