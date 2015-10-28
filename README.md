@@ -8,13 +8,28 @@ WRITE-IT-ONCE
 - custom documentation, based on custom annotations, generate XML, DOC, HTML...
 
 **Simplified language**
-!!!!
+// TODO: doc
+
+**Easy to extend**
+// TODO: doc
 
 ## Table of Contents
-- [Getting Started](#getting_started)
+- [Getting Started](#getting-started)
+- [Expression examples](#expression-examples)
+- [How to use / installation](#how-to-use-/-installation)
+- [How to extend](#how-to-extend)
+- [Plugins](#plugins)
+	- [JPA plugin](#jpa-plugin)
+		- [maven dependency](#maven-dependency)
+		- [configure](#configure)
+		- [expression examples](#expression-examples)
+	- [Source comments plugin](#source-comments-plugin)
+		- [maven dependency](#maven-dependency)
+		- [configure](#configure)
+		- [expression examples](#expression-examples)
 
-## How to use / instalation
-```
+## How to use / installation
+```xml
 <dependency>
     <groupId>org.simart</groupId>
     <artifactId>write-it-once-core</artifactId>
@@ -24,7 +39,7 @@ WRITE-IT-ONCE
 
 ## Getting Started
 A basic use of Reflections would be
-```
+```java
 // create generator with string groovy template
 final Generator generator = Generator.create("Class ${cls.name} has ${cls.field['id'].name} field");
 
@@ -39,7 +54,7 @@ final String result = generator.generate();
 assertThat(result ).isEqualTo("Class org.simart.writeonce.domain.Atest has id field");
 ```
 or multi file, universal generator
-```
+```java
 // find interesting classes - it's easy with org.reflections.Reflections
 final Reflections reflections = new Reflections("org.simart.writeonce.domain");
         final Set<Class<?>> datas = reflections.getTypesAnnotatedWith(Builder.class);
@@ -65,7 +80,7 @@ for (Class<?> data : datas) {
 }
 ```
 The builder is custom runtime annotation, and script "src/test/resources/scripts/Builder.java"
-```
+```java
 package ${cls.package.name};
 
 public class ${cls.shortName}Builder {
@@ -92,7 +107,7 @@ public class ${cls.shortName}Builder {
 }
 ```
 result
-```
+```java
 package org.simart.writeonce.domain;
 
 public class AtestBuilder {
@@ -138,13 +153,13 @@ public class AtestBuilder {
 ```
 ## Expression examples
 standard reflection
-```
+```jsp
 ${cls.name} // full class name
 ${cls.field['id']}.type.name // id field type's full class name 
 ${cls.annotation['org.simart.writeonce.domain.Describe'].attribute.value()} // get Describe annotation value
 ```
-## Extend
-```
+## How to extend
+```java
 // given
 final Generator generator = Generator.create("XXX${cls.name} ${cls.someValue} ${cls.isEnum} ${cls.interfaces[0].name}");
 ReflectionPlugin.configure(generator);
@@ -173,7 +188,7 @@ assertThat(generator.bindValue("cls", Atest.class).generate()).isEqualTo("XXXorg
 ## Plugins
 ### JPA plugin
 #### maven dependency
-```
+```xml
 <dependency>
     <groupId>org.simart</groupId>
     <artifactId>write-it-once-jpa</artifactId>
@@ -181,14 +196,14 @@ assertThat(generator.bindValue("cls", Atest.class).generate()).isEqualTo("XXXorg
 </dependency>
 ```
 #### configure
-```
+```java
 final Generator generator = Generator.create("${cls.table.name}");
 JpaPlugin.configure(generator); // or JpaPlugin.configure(generator, <some column name resolver>, <column type resolver>, <table name resolver>);
 final String result = generator.bind("cls", Class.class, Atest.class).generate();
 assertThat(result).isEqualTo("A_TEST");
 ```
 #### expression examples
-```
+```jsp
 ${cls.table.name}
 ${cls.field['atestField'].column.name} 
 ${cls.method['getBtest'].column.name}
@@ -198,7 +213,7 @@ ${cls.column['ID'].annotation['javax.persistence.GeneratedValue'].attribute.stra
 ```
 ### Source comments plugin
 #### maven depdependency
-```
+```xml
 <dependency>
     <groupId>org.simart</groupId>
     <artifactId>write-it-once-source</artifactId>
@@ -206,14 +221,14 @@ ${cls.column['ID'].annotation['javax.persistence.GeneratedValue'].attribute.stra
 </dependency>
 ```
 #### configure
-```
+```java
 final Generator generator = Generator.create("${cls.name} -> ${cls.comment}").lineSeparator("\n");
         SourcePlugin.configure(generator, SOURCE_PATH);
 final String result = generator.bind("cls", Class.class, Atest.class).generate();
 assertThat(result).isEqualTo("org.simart.writeonce.domain.Atest -> \n * Javadoc class comment\n * \n * @author Wojtek\n *\n ");
 ```
 #### expression examples
-```
+```jsp
 ${cls.comment}
 ```
 #### examples
